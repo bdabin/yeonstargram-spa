@@ -1,9 +1,14 @@
 <template>
-  <div></div>
+  <JoinContainer />
 </template>
 
 <script>
-export default {}
+import JoinContainer from '@/components/container/account/JoinContainer'
+export default {
+  components: {
+    JoinContainer
+  }
+}
 </script>
 
 <style lang="scss" scoped>
