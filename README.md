@@ -1,29 +1,12 @@
-# atoms-app
+# Yeonstargram 
 
-## Project setup
+## node server 시작
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
+npm start
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### API 문서
 
-### Run your tests
 ```
-npm run test
+  대기중
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
