@@ -14,7 +14,18 @@ const routes = [
     path: '/work',
     name: 'work',
     component: () => import('../views/work')
-  }
+  },
+  {
+    path: '/account/login',
+    name: '로그인',
+    component: () => import('../views/account/login')
+  },
+  {
+    path: '/account/join',
+    name: '회원가입',
+    component: () => import('../views/account/join')
+  },
+
 ]
 
 const router = new VueRouter({
