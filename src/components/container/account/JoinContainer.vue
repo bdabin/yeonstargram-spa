@@ -38,7 +38,7 @@ export default {
       let data
       try {
         await axios
-          .post('/api/user', {
+          .post('/api/account', {
             email,
             password,
             username,
