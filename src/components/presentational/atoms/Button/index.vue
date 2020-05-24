@@ -24,17 +24,8 @@ export default {
 button {
   cursor: pointer;
   transition: opacity 0.2s;
-
   &:focus {
     outline: 0;
-  }
-
-  &:hover {
-    opacity: 0.8;
-  }
-
-  &:active {
-    opacity: 0.5;
   }
 
   &:disabled {

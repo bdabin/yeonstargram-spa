@@ -10,20 +10,17 @@
   >
     <Box v-if="header" class="header" direction="column" vertical="center">
       <slot name="header" />
-      <Hr />
     </Box>
     <slot />
   </Box>
 </template>
 
 <script>
-import Hr from '../../atoms/Hr'
 import Box from '../Box'
 
 export default {
   name: 'RoundBox',
   components: {
-    Hr,
     Box
   },
   props: {
@@ -70,7 +67,7 @@ export default {
   display: flex;
   height: auto;
   background-color: white;
-  border: 1px solid $primary2;
+  border: 1px solid #eee;
 }
 
 .header {
