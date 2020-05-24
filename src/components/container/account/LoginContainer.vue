@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LoginBox :user="user" @login="login"></LoginBox>
+    <LoginBox :user="user" @login="login" />
   </div>
 </template>
 
