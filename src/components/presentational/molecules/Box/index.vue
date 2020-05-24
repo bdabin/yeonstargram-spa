@@ -59,7 +59,6 @@ export default {
 .row {
   flex-direction: row;
 
-
   &.v-top {
     align-items: flex-start;
   }
