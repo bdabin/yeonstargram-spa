@@ -52,10 +52,12 @@ export default {
       } finally {
         if (data.status === 200) {
           // 회원가입 성공
-          console.log('회원가입 성공')
+          // console.log('회원가입 성공')
+          alert('회원가입 완료 !')
+          this.$router.push('/account/login')
         } else {
           // 회원가입 실패
-          console.log('회원가입 실패')
+          alert('회원가입을 할 수 없습니다.')
         }
       }
     }
