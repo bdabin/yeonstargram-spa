@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+// import auth from '../middleware/auth'
 
 Vue.use(VueRouter)
 
@@ -27,12 +28,17 @@ const routes = [
   {
     path: '/board',
     name: '목록',
-    component: () => import('../views/board/list')
+    component: () => import('../views/board/list'),
   },
   {
     path: '/board/write',
     name: '쓰기',
     component: () => import('../views/board/write')
+  },
+  {
+    path: '/mypage',
+    name: '마이페이지',
+    component: () => import('../views/mypage')
   },
 
 ]

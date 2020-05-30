@@ -1,7 +1,7 @@
 <template>
-  <Box wrap vertical="center" horizontal="center">
+  <Box class="tab-bar" wrap vertical="center" horizontal="center" padding="0 24px">
     <Box v-for="(menu, index) in menuItems" :key="index" @click.native="menu.action">
-      <Icon :name="menu.text" />
+      <Icon :name="menu.icon" width="24px" />
     </Box>
   </Box>
 </template>
@@ -15,7 +15,27 @@ export default {
     menuItems: {
       type: Array,
       default() {
-        return []
+        return [
+          {
+            icon: this.$route.path === '/board' ? 'home2' : 'home',
+            action: () => {
+              this.$router.push('/board')
+            }
+          },
+          {
+            icon: 'plus',
+            action: () => {
+              this.$router.push('/board/write')
+            }
+          },
+          {
+            icon: this.$route.path === '/mypage' ? 'user2' : 'user',
+            activeIcon: 'user2',
+            action: () => {
+              this.$router.push('/mypage')
+            }
+          }
+        ]
       }
     }
   },
@@ -27,4 +47,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.tab-bar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  border-top: 1px solid #eee;
+  z-index: 2;
+  background-color: #fff;
+  justify-content: space-between !important;
+}
 </style>

@@ -1,29 +1,43 @@
 <template>
-  <BoardListBox :posts="posts" @more="onMore" @like="onLike" @comment="onComment" />
+  <div>
+    <NavigationBar>
+      <template #centerTitle>
+        <Icon name="logo" />
+      </template>
+    </NavigationBar>
+    <BoardListBox :posts="posts" @more="onMore" @like="onLike" @comment="onComment" />
+    <TabBar />
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
 import BoardListBox from '@/components/presentational/organisms/board/BoardListBox/index.vue'
+import NavigationBar from '@/components/presentational/organisms/NavigationBar/index.vue'
+import TabBar from '@/components/presentational/organisms/TabBar/index.vue'
+
+import Icon from '@/components/common/Icon'
+
 export default {
   components: {
-    BoardListBox
+    BoardListBox,
+    NavigationBar,
+    Icon,
+    TabBar
   },
   data() {
     return {
-      posts: [
-      ]
+      posts: []
     }
   },
-  created(){
+  created() {
     this.loadData()
   },
-  methods:{
-    async loadData(){
+  methods: {
+    async loadData() {
       const response = await axios.get('/api/board')
-      console.log(response)
-      this.posts = response.data.sort((a,b) => {
-        if(a.id > b.id) {
+      this.posts = response.data.sort((a, b) => {
+        if (a.id > b.id) {
           return 1
         } else if (a.id < b.id) {
           return -1
@@ -32,13 +46,13 @@ export default {
         }
       })
     },
-    onMore(){
+    onMore() {
       console.log('더보기')
     },
-    onLike(){
+    onLike() {
       console.log('좋아요')
     },
-    onComment(){
+    onComment() {
       console.log('코멘트 작성')
     }
   }
