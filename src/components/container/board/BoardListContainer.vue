@@ -1,13 +1,12 @@
 <template>
-  <div>
-    <NavigationBar>
-      <template #centerTitle>
-        <Icon name="logo" />
-      </template>
-    </NavigationBar>
-    <BoardListBox :posts="posts" @more="onMore" @like="onLike" @comment="onComment" />
-    <TabBar />
-  </div>
+  <BoardListBox
+    :posts="posts"
+    @more="onMore"
+    @like="onLike"
+    @comment="onComment"
+    @edit="edit"
+    @deleteExecution="deleteExecution"
+  />
 </template>
 
 <script>
@@ -36,6 +35,7 @@ export default {
   methods: {
     async loadData() {
       const response = await axios.get('/api/board')
+      console.log(response)
       this.posts = response.data.sort((a, b) => {
         if (a.id > b.id) {
           return 1
@@ -54,6 +54,22 @@ export default {
     },
     onComment() {
       console.log('코멘트 작성')
+    },
+    edit(id) {
+      axios.get(`/api/board/write/${id}`).then(res => {
+        console.log(res)
+        this.$router.push(`/board/write/${id}`)
+      })
+    },
+    async deleteExecution(id) {
+      if (confirm('정말 삭제하시겠습니까?')) {
+        const response = await axios.get(`/api/board/delete/${id}`)
+        if (response.status === 200) {
+          this.loadData()
+        } else {
+          alert('삭제 할 수 없습니다.')
+        }
+      }
     }
   }
 }
