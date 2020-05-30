@@ -1,9 +1,14 @@
 <template>
-  <div></div>
+  <BoardListContainer />
 </template>
 
 <script>
-export default {}
+import BoardListContainer from '@/components/container/board/BoardListContainer'
+export default {
+  components: {
+    BoardListContainer
+  }
+}
 </script>
 
 <style>
