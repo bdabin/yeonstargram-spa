@@ -25,7 +25,7 @@ const routes = [
     component: () => import('../views/account/join')
   },
   {
-    path: '/board/list',
+    path: '/board',
     name: '목록',
     component: () => import('../views/board/list')
   },

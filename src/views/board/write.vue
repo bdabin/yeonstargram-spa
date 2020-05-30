@@ -1,9 +1,14 @@
 <template>
-  <div></div>
+  <WriteContainer />
 </template>
 
 <script>
-export default {}
+import WriteContainer from '@/components/container/board/WriteContainer'
+export default {
+  components: {
+    WriteContainer
+  }
+}
 </script>
 
 <style>
