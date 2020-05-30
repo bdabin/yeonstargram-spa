@@ -46,6 +46,7 @@ export default {
 }
 
 .index-title {
+  width: 100%;
   height: calc(100vh - 218px);
   span {
     font-size: 22px;

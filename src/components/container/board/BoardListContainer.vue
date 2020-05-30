@@ -1,12 +1,20 @@
 <template>
-  <BoardListBox
-    :posts="posts"
-    @more="onMore"
-    @like="onLike"
-    @comment="onComment"
-    @edit="edit"
-    @deleteExecution="deleteExecution"
-  />
+  <div>
+    <NavigationBar>
+      <template #centerTitle>
+        <Icon name="logo" />
+      </template>
+    </NavigationBar>
+    <BoardListBox
+      :posts="posts"
+      @more="onMore"
+      @like="onLike"
+      @comment="onComment"
+      @edit="edit"
+      @deleteExecution="deleteExecution"
+    />
+    <TabBar />
+  </div>
 </template>
 
 <script>

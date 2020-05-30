@@ -24,6 +24,8 @@ export default {
 button {
   cursor: pointer;
   transition: opacity 0.2s;
+  border: 0;
+  background: unset;
   &:focus {
     outline: 0;
   }
