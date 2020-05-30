@@ -19,6 +19,15 @@
             </RoundBox>
           </Button>
         </Box>
+        <Box>
+          <Button>
+            <RoundBox horizontal="center" vertical="center" padding="0" radius="10px">
+              <Span type="title1">
+                <a href="/auth/facebook">페이스북 로그인</a>
+              </Span>
+            </RoundBox>
+          </Button>
+        </Box>
       </form>
     </Box>
   </Box>

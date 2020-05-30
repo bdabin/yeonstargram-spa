@@ -26,6 +26,15 @@
           </RoundBox>
         </Button>
       </Box>
+      <Box class="join-btn" direction="column">
+        <Button>
+          <RoundBox radius="10px" vertical="center" horizontal="center" padding="0">
+            <Span type="title1">
+              <a @event.prevent @click="$emit('facebooklink')">페이스북 회원가입</a>
+            </Span>
+          </RoundBox>
+        </Button>
+      </Box>
     </Box>
   </Box>
 </template>

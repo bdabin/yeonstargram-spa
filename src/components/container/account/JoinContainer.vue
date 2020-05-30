@@ -1,5 +1,5 @@
 <template>
-  <JoinBox :user="user" @goJoin="goJoin" />
+  <JoinBox :user="user" @goJoin="goJoin" @facebooklink="facebooklink" />
 </template>
 
 <script>
@@ -22,6 +22,21 @@ export default {
     }
   },
   methods: {
+    usrRe(url) {
+      window.location.href = url
+    },
+    facebooklink() {
+      axios
+        .get('/api/auth/facebook', {
+          // headers: {
+          //   'Access-Control-Allow-Origin': 'http://localhost:3000'
+          // }
+        })
+        .then(res => {
+          console.log(res.request.responseURL)
+          this.usrRe(res.request.responseURL)
+        })
+    },
     async goJoin() {
       if (this.user.password !== this.user.rePassword) {
         alert('비밀번호가 일치하지 않습니다 !')

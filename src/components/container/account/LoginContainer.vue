@@ -1,10 +1,12 @@
 <template>
   <div>
+    <flash-message class="myCustomClass"></flash-message>
     <LoginBox :user="user" @login="login" />
   </div>
 </template>
 
 <script>
+require('vue-flash-message/dist/vue-flash-message.min.css')
 import axios from 'axios'
 import LoginBox from '@/components/presentational/organisms/account/LoginBox'
 export default {
@@ -45,9 +47,13 @@ export default {
         data = error.response
       } finally {
         if (data.status === 200) {
-          console.log('로그인성공')
+          this.flash('로그인 성공', 'success', {
+            timeout: 1000
+          })
         } else {
-          console.log('로그인 실패')
+          this.flash('로그인 실패', 'error', {
+            timeout: 1000
+          })
         }
       }
     }
