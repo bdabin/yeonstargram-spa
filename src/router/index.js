@@ -24,6 +24,16 @@ const routes = [
     name: '회원가입',
     component: () => import('../views/account/join')
   },
+  {
+    path: '/board/list',
+    name: '목록',
+    component: () => import('../views/board/list')
+  },
+  {
+    path: '/board/write',
+    name: '쓰기',
+    component: () => import('../views/board/write')
+  },
 
 ]
 
