@@ -20,11 +20,18 @@ export default {
   },
 
   methods: {
-    boardwrite() {
-      axios.post('/api/board/write', this.board).then(res => {
-        console.log(res)
+    async boardwrite() {
+      const response =  await axios.post('/api/board/write', {
+         ...this.board,
+         writer:this.$store.state.user.id
       })
-      console.log('aa')
+
+      if(response.status === 200) {
+        alert('작성이 완료됐습니다 !')
+        this.$router.push('/board')
+      } else {
+        alert('작성할 수 없는 내용입니다.')
+      }
     }
   }
 }

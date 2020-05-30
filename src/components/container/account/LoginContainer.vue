@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import LoginBox from '@/components/presentational/organisms/account/LoginBox'
 export default {
   name: 'LoginContainer',
@@ -31,25 +30,35 @@ export default {
         return
       }
 
-      let data
-      try {
-        await axios
-          .post('/api/account/login', {
-            email: this.user.email,
-            password: this.user.password
-          })
-          .then(res => {
-            data = res
-          })
-      } catch (error) {
-        data = error.response
-      } finally {
-        if (data.status === 200) {
-          console.log('로그인성공')
-        } else {
-          console.log('로그인 실패')
-        }
+      await this.$store.dispatch('login', {
+        email: this.user.email,
+        password: this.user.password
+      })
+
+      if(this.$store.state.isLogin) {
+        this.$router.push('/board')
       }
+
+
+      // let data
+      // try {
+      //   await axios
+      //     .post('/api/account/login', {
+      //       email: this.user.email,
+      //       password: this.user.password
+      //     })
+      //     .then(res => {
+      //       data = res
+      //     })
+      // } catch (error) {
+      //   data = error.response
+      // } finally {
+      //   if (data.status === 200) {
+      //     this.$router.push('/board')
+      //   } else {
+      //     alert('로그인을 할 수 없습니다')
+      //   }
+      // }
     }
   }
 }
