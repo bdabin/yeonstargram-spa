@@ -1,6 +1,6 @@
 import Vue from 'vue'
+import store from '../store'
 import VueRouter from 'vue-router'
-// import auth from '../middleware/auth'
 
 Vue.use(VueRouter)
 
@@ -29,6 +29,14 @@ const routes = [
     path: '/board',
     name: '목록',
     component: () => import('../views/board/list'),
+    async beforeEnter(to,from,next) {
+      await store.dispatch('isLogin')
+      if(!store.state.isLogin) {
+        router.push('/account/login')
+        return
+      }
+      next()
+    }
   },
   {
     path: '/board/write',

@@ -8,7 +8,7 @@ export default new Vuex.Store({
   state: {
     isLogin:false,
     user:{
-      id:0,
+      id:null,
       username:'',
       email:'',
       phone:''
@@ -23,19 +23,36 @@ export default new Vuex.Store({
         phone : payload.phone
       }
       state.user = user
-      state.isLogin = true
+    },
+    isLogin(state, payload) {
+      if(!payload) {
+        state.user = {
+          id:null,
+          username:'',
+          email:'',
+          phone:''
+        }
+      }
+      state.isLogin = payload
     }
   },
   actions: {
-    async login({commit}, payload){
-      // console.log(this.$http)
-      // const response = await this.$http.post('/api/account/login', payload)
+    async login({commit, dispatch}, payload){
       const response = await axios.post('/api/account/login', payload)
 
       if(response.status === 200) {
         commit('login',response.data)
+        await dispatch('isLogin')
       } else {
         console.log('로그인 실패')
+      }
+    },
+  async isLogin({commit}) {
+      const response = await axios.get('/api/account')
+      if(response.status === 200) {
+        commit('isLogin', true)
+      } else {
+        commit('isLogin', false)
       }
     }
   }
