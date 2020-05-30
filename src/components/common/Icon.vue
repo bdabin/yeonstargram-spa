@@ -37,7 +37,14 @@ export default {
     },
     image() {
       return {
-        logo: require('@/assets/logo.png')
+        logo: require('@/assets/logo.png'),
+        back: require('@/assets/icons/back.svg'),
+        comment: require('@/assets/icons/comment.svg'),
+        heart: require('@/assets/icons/heart.svg'),
+        heart2: require('@/assets/icons/heart2.svg'),
+        menu: require('@/assets/icons/menu.svg'),
+        right: require('@/assets/icons/right.svg'),
+        more: require('@/assets/icons/more.svg'),
       }
     }
   }
