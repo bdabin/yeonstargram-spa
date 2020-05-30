@@ -34,6 +34,12 @@ const routes = [
     name: '쓰기',
     component: () => import('../views/board/write')
   },
+  {
+    path: '/board/write/:id',
+    name: '수정',
+    component: () => import('../views/board/write')
+  },
+
 
 ]
 
