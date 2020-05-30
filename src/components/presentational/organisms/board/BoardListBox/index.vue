@@ -7,6 +7,8 @@
         @more="(id) => $emit('more', id)"
         @like="(id) => $emit('like', id)"
         @comment="(id) => $emit('comment',id)"
+        @edit="(id) => $emit('edit',id)"
+        @deleteExecution="(id) => $emit('deleteExecution',id)"
       />
     </template>
   </Box>

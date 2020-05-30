@@ -48,6 +48,12 @@ const routes = [
     name: '마이페이지',
     component: () => import('../views/mypage')
   },
+  {
+    path: '/board/write/:id',
+    name: '수정',
+    component: () => import('../views/board/write')
+  },
+
 
 ]
 

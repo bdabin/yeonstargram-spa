@@ -13,10 +13,10 @@
 
     <Box class="board-list-option" padding="0px 16px" vertical="center">
       <Button @click="$emit('like',post.id)">
-      <Icon name="heart" />
+        <Icon name="heart" />
       </Button>
       <Button @click="$emit('comment', post.id)">
-      <Icon name="comment" />
+        <Icon name="comment" />
       </Button>
     </Box>
 
@@ -26,6 +26,8 @@
         {{ post.description }}
       </Span>
     </Box>
+    <Button @click="$emit('edit',post.id)">수정</Button>
+    <Button @click="$emit('deleteExecution',post.id)">삭제</Button>
   </Box>
 </template>
 
@@ -86,7 +88,7 @@ export default {
     button {
       margin-right: 10px;
       img {
-        width:24px
+        width: 24px;
       }
     }
   }
