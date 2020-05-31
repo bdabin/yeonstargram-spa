@@ -48,6 +48,7 @@ export default {
         home: require('@/assets/icons/home.svg'),
         home2: require('@/assets/icons/home2.svg'),
         plus: require('@/assets/icons/plus.svg'),
+        plus2: require('@/assets/icons/plus2.svg'),
         user: require('@/assets/icons/user.svg'),
         user2: require('@/assets/icons/user2.svg')
       }

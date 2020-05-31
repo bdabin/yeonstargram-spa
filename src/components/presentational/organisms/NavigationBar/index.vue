@@ -1,13 +1,13 @@
 <template>
   <Box class="nav-bar">
-    <Box class="nav-content" padding="0 16px" vertical="center">
+    <Box class="nav-content" padding="0 16px" vertical="center" wrap>
       <Button @click="$emit('leftBtn')">
         <Box>
           <slot name="leftBtn"></slot>
         </Box>
       </Button>
 
-      <Box class="centerTitle">
+      <Box class="center-title">
         <slot name="centerTitle"></slot>
       </Box>
 
@@ -52,6 +52,12 @@ export default {
     left: 0;
     z-index: 2;
     background-color: #fff;
+    .center-title {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
   img {
     width: 24px;

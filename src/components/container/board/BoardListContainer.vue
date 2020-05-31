@@ -43,12 +43,11 @@ export default {
   methods: {
     async loadData() {
       const response = await axios.get('/api/board')
-      console.log(response)
       this.posts = response.data.sort((a, b) => {
         if (a.id > b.id) {
-          return 1
-        } else if (a.id < b.id) {
           return -1
+        } else if (a.id < b.id) {
+          return 1
         } else {
           return 0
         }

@@ -11,6 +11,10 @@ import Icon from '@/components/common/Icon'
 import Box from '@/components/presentational/molecules/Box'
 
 export default {
+  components: {
+    Icon,
+    Box
+  },
   props: {
     menuItems: {
       type: Array,
@@ -23,7 +27,7 @@ export default {
             }
           },
           {
-            icon: 'plus',
+            icon: this.$route.path === '/board/write' ? 'plus2' : 'plus',
             action: () => {
               this.$router.push('/board/write')
             }
@@ -38,10 +42,6 @@ export default {
         ]
       }
     }
-  },
-  components: {
-    Icon,
-    Box
   }
 }
 </script>
