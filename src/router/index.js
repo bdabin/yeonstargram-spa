@@ -8,7 +8,15 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views')
+    component: () => import('../views'),
+    async beforeEnter(to,from,next) {
+      await store.dispatch('isLogin')
+      if(store.state.isLogin) {
+        router.push('/board')
+        return
+      }
+      next()
+    }
   },
   {
     path: '/work',
@@ -18,12 +26,28 @@ const routes = [
   {
     path: '/account/login',
     name: '로그인',
-    component: () => import('../views/account/login')
+    component: () => import('../views/account/login'),
+    async beforeEnter(to,from,next) {
+      await store.dispatch('isLogin')
+      if(store.state.isLogin) {
+        router.push('/board')
+        return
+      }
+      next()
+    }
   },
   {
     path: '/account/join',
     name: '회원가입',
-    component: () => import('../views/account/join')
+    component: () => import('../views/account/join'),
+    async beforeEnter(to,from,next) {
+      await store.dispatch('isLogin')
+      if(store.state.isLogin) {
+        router.push('/board')
+        return
+      }
+      next()
+    }
   },
   {
     path: '/board',
@@ -41,17 +65,41 @@ const routes = [
   {
     path: '/board/write',
     name: '쓰기',
-    component: () => import('../views/board/write')
+    component: () => import('../views/board/write'),
+    async beforeEnter(to,from,next) {
+      await store.dispatch('isLogin')
+      if(!store.state.isLogin) {
+        router.push('/account/login')
+        return
+      }
+      next()
+    }
   },
   {
     path: '/mypage',
     name: '마이페이지',
-    component: () => import('../views/mypage')
+    component: () => import('../views/mypage'),
+    async beforeEnter(to,from,next) {
+      await store.dispatch('isLogin')
+      if(!store.state.isLogin) {
+        router.push('/account/login')
+        return
+      }
+      next()
+    }
   },
   {
     path: '/board/write/:id',
     name: '수정',
-    component: () => import('../views/board/write')
+    component: () => import('../views/board/write'),
+    async beforeEnter(to,from,next) {
+      await store.dispatch('isLogin')
+      if(!store.state.isLogin) {
+        router.push('/account/login')
+        return
+      }
+      next()
+    }
   },
 
 

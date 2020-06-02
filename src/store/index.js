@@ -37,11 +37,10 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async login({commit, dispatch}, payload){
+    async login({dispatch}, payload){
       const response = await axios.post('/api/account/login', payload)
 
       if(response.status === 200) {
-        commit('login',response.data)
         await dispatch('isLogin')
       } else {
         console.log('로그인 실패')
@@ -50,6 +49,7 @@ export default new Vuex.Store({
   async isLogin({commit}) {
       const response = await axios.get('/api/account')
       if(response.status === 200) {
+        commit('login', response.data)
         commit('isLogin', true)
       } else {
         commit('isLogin', false)
