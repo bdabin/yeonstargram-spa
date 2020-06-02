@@ -26,8 +26,6 @@
         {{ post.description }}
       </Span>
     </Box>
-    <Button @click="$emit('edit',post.id)">수정</Button>
-    <Button @click="$emit('deleteExecution',post.id)">삭제</Button>
   </Box>
 </template>
 

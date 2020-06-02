@@ -1,14 +1,30 @@
 <template>
-  <WriteBox :board="board" @boardwrite="boardwrite" />
+  <div>
+    <NavigationBar>
+      <template #centerTitle>
+        <Icon name="logo" />
+      </template>
+    </NavigationBar>
+    <WriteBox :board="board" @boardwrite="boardwrite" />
+    <TabBar />
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
 import WriteBox from '@/components/presentational/organisms/board/WriteBox'
+
+import NavigationBar from '@/components/presentational/organisms/NavigationBar/index.vue'
+import TabBar from '@/components/presentational/organisms/TabBar/index.vue'
+import Icon from '@/components/common/Icon'
+
 export default {
   name: 'WriteContainer',
   components: {
-    WriteBox
+    WriteBox,
+    NavigationBar,
+    Icon,
+    TabBar
   },
   data() {
     return {
