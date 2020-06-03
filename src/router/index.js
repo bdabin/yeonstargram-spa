@@ -29,9 +29,9 @@ const routes = [
     path: '/board',
     name: '목록',
     component: () => import('../views/board/list'),
-    async beforeEnter(to,from,next) {
+    async beforeEnter(to, from, next) {
       await store.dispatch('isLogin')
-      if(!store.state.isLogin) {
+      if (!store.state.isLogin) {
         router.push('/account/login')
         return
       }
@@ -53,6 +53,11 @@ const routes = [
     name: '수정',
     component: () => import('../views/board/write')
   },
+  {
+    path: '/board/comment/:id',
+    name: '수정',
+    component: () => import('../views/board/comment')
+  }
 
 
 ]

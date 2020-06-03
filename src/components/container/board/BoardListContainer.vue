@@ -71,8 +71,9 @@ export default {
     onLike() {
       console.log('좋아요')
     },
-    onComment() {
+    onComment(id) {
       console.log('코멘트 작성')
+      this.$router.push(`/board/comment/${id}`)
     },
     edit(id) {
       axios.get(`/api/board/write/${id}`).then(res => {
