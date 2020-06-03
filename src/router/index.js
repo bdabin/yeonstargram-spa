@@ -8,15 +8,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views'),
-    async beforeEnter(to,from,next) {
-      await store.dispatch('isLogin')
-      if(store.state.isLogin) {
-        router.push('/board')
-        return
-      }
-      next()
-    }
+    component: () => import('../views')
   },
   {
     path: '/work',
@@ -26,28 +18,12 @@ const routes = [
   {
     path: '/account/login',
     name: '로그인',
-    component: () => import('../views/account/login'),
-    async beforeEnter(to,from,next) {
-      await store.dispatch('isLogin')
-      if(store.state.isLogin) {
-        router.push('/board')
-        return
-      }
-      next()
-    }
+    component: () => import('../views/account/login')
   },
   {
     path: '/account/join',
     name: '회원가입',
-    component: () => import('../views/account/join'),
-    async beforeEnter(to,from,next) {
-      await store.dispatch('isLogin')
-      if(store.state.isLogin) {
-        router.push('/board')
-        return
-      }
-      next()
-    }
+    component: () => import('../views/account/join')
   },
   {
     path: '/board',
