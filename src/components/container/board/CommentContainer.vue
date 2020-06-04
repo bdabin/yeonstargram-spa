@@ -35,15 +35,17 @@ export default {
       if (response.status === 200) {
         this.$router.push('/board')
       }
+    },
+    async loadData() {
+      const response = await axios.get(`/api/board/comment/${this.id}`)
+      if (response.status === 200) {
+        this.comment = response.data.Memo
+        console.log(this.comment)
+      }
     }
   },
   created() {
-    axios.get(`/api/board/comment/${this.id}`).then(res => {
-      if (res.status === 200) {
-        this.comment = res.data.Memo
-        console.log(this.comment)
-      }
-    })
+    this.loadData()
   }
 }
 </script>
