@@ -56,8 +56,16 @@ export default {
     onMore() {
       console.log('더보기')
     },
-    onLike() {
-      console.log('좋아요')
+    async onLike(board_id) {
+      const response = await axios.post('/api/board/like', {
+        user_id: this.$store.state.user.id,
+        board_id
+      })
+
+      if (response.status === 200) {
+        console.log('좋아요 완료')
+      }
+      // console.log('좋아요')
     },
     onComment() {
       console.log('코멘트 작성')

@@ -1,7 +1,7 @@
 <template>
   <Box class="board-list-cell" direction="column" padding="0 0 16px">
     <Box class="board-list-header" vertical="center" padding="0 16px">
-      <Span type="title1">{{ post.writer }}</Span>
+      <Span type="title1">{{ post.User.username }}</Span>
       <Button @click="$emit('more', post.id)">
         <Icon name="more" />
       </Button>
@@ -22,7 +22,7 @@
 
     <Box class="board-list-desc" padding="12px 16px">
       <Span>
-        <b>{{ post.writer }}</b>
+        <b>{{ post.User.username }}</b>
         {{ post.description }}
       </Span>
     </Box>
