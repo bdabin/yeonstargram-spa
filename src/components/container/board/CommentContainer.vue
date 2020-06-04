@@ -5,7 +5,7 @@
         <Icon name="logo" />
       </template>
     </NavigationBar>
-    <CommentBox :comment="comment" @commentwrite="commentwrite"></CommentBox>
+    <CommentBox :comment="comment" :user="user" @commentwrite="commentwrite"></CommentBox>
   </div>
 </template>
 
@@ -24,6 +24,7 @@ export default {
   data() {
     return {
       comment: [],
+      user: {},
       id: this.$route.params.id || null
     }
   },
@@ -39,8 +40,9 @@ export default {
     async loadData() {
       const response = await axios.get(`/api/board/comment/${this.id}`)
       if (response.status === 200) {
-        this.comment = response.data.Memo
-        console.log(this.comment)
+        this.comment = response.data.Reply
+        this.user = response.data.User
+        console.log(response.data.User)
       }
     }
   },
