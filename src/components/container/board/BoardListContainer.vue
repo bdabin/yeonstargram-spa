@@ -1,18 +1,22 @@
 <template>
   <div>
+    <moreBar
+      v-show="isList"
+      @closeBtn="closeBtn"
+      :id="id"
+      @edit="edit"
+      @deleteExecution="deleteExecution"
+    ></moreBar>
+    <transition name="fade">
+      <div class="back" v-show="isList"></div>
+    </transition>
     <NavigationBar>
       <template #centerTitle>
         <Icon name="logo" />
       </template>
     </NavigationBar>
-    <BoardListBox
-      :posts="posts"
-      @more="onMore"
-      @like="onLike"
-      @comment="onComment"
-      @edit="edit"
-      @deleteExecution="deleteExecution"
-    />
+    <BoardListBox :posts="posts" @more="onMore" @like="onLike" @comment="onComment" />
+
     <TabBar />
   </div>
 </template>
@@ -21,6 +25,7 @@
 import axios from 'axios'
 import BoardListBox from '@/components/presentational/organisms/board/BoardListBox/index.vue'
 import NavigationBar from '@/components/presentational/organisms/NavigationBar/index.vue'
+import moreBar from '@/components/presentational/organisms/moreBar/index.vue'
 import TabBar from '@/components/presentational/organisms/TabBar/index.vue'
 
 import Icon from '@/components/common/Icon'
@@ -30,11 +35,14 @@ export default {
     BoardListBox,
     NavigationBar,
     Icon,
-    TabBar
+    TabBar,
+    moreBar
   },
   data() {
     return {
-      posts: []
+      posts: [],
+      isList: false,
+      id: NaN
     }
   },
   created() {
@@ -53,8 +61,11 @@ export default {
         }
       })
     },
-    onMore() {
+    onMore(id) {
       console.log('더보기')
+      this.isList = !this.isList
+      this.id = id
+      console.log(this.id)
     },
     async onLike(board_id) {
       const response = await axios.post('/api/board/like', {
@@ -67,8 +78,9 @@ export default {
       }
       // console.log('좋아요')
     },
-    onComment() {
+    onComment(id) {
       console.log('코멘트 작성')
+      this.$router.push(`/board/comment/${id}`)
     },
     edit(id) {
       axios.get(`/api/board/write/${id}`).then(res => {
@@ -81,14 +93,37 @@ export default {
         const response = await axios.get(`/api/board/delete/${id}`)
         if (response.status === 200) {
           this.loadData()
+          this.isList = false
         } else {
           alert('삭제 할 수 없습니다.')
         }
       }
+    },
+
+    closeBtn() {
+      this.isList = !this.isList
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.back {
+  background: rgba(0, 0, 0, 0.411);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
