@@ -51,15 +51,21 @@ export default {
   methods: {
     async loadData() {
       const response = await axios.get('/api/board')
-      this.posts = response.data.sort((a, b) => {
-        if (a.id > b.id) {
-          return -1
-        } else if (a.id < b.id) {
-          return 1
-        } else {
-          return 0
-        }
-      })
+      this.posts = response.data
+        .map(post => {
+          const result = post.like.find(data => data.user_id === this.$store.state.user.id)
+          post.likeIt = Boolean(result)
+          return post
+        })
+        .sort((a, b) => {
+          if (a.id > b.id) {
+            return -1
+          } else if (a.id < b.id) {
+            return 1
+          } else {
+            return 0
+          }
+        })
     },
     onMore(id) {
       console.log('더보기')
@@ -67,16 +73,20 @@ export default {
       this.id = id
       console.log(this.id)
     },
-    async onLike(board_id) {
-      const response = await axios.post('/api/board/like', {
-        user_id: this.$store.state.user.id,
-        board_id
+    async onLike(post) {
+      const method = post.likeIt ? 'delete' : 'post'
+      const response = await axios({
+        method,
+        url: '/api/board/like',
+        data: {
+          user_id: this.$store.state.user.id,
+          board_id: post.id
+        }
       })
 
       if (response.status === 200) {
-        console.log('좋아요 완료')
+        post.likeIt = !post.likeIt
       }
-      // console.log('좋아요')
     },
     onComment(id) {
       console.log('코멘트 작성')

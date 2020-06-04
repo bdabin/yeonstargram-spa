@@ -12,8 +12,8 @@
     </Box>
 
     <Box class="board-list-option" padding="0px 16px" vertical="center">
-      <Button @click="$emit('like',post.id)">
-        <Icon name="heart" />
+      <Button @click="$emit('like',post)">
+        <Icon :name="post.likeIt ? 'heart2' : 'heart'" />
       </Button>
       <Button @click="$emit('comment', post.id)">
         <Icon name="comment" />

@@ -5,7 +5,7 @@
         :key="post.id"
         :post="post"
         @more="(id) => $emit('more', id)"
-        @like="(id) => $emit('like', id)"
+        @like="(post) => $emit('like', post)"
         @comment="(id) => $emit('comment',id)"
         @edit="(id) => $emit('edit',id)"
         @deleteExecution="(id) => $emit('deleteExecution',id)"
