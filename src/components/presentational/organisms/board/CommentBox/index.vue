@@ -5,7 +5,7 @@
       direction="column"
       v-for="(commentI,index) in comment"
       :key="index"
-    >{{user.username}} : {{commentI.content}} 날짜 : {{$moment(commentI.createdAt).format('YYYY.MM.DD')}}</Box>
+    >{{commentI.User.username}} : {{commentI.content}} 날짜 : {{$moment(commentI.createdAt).format('YYYY.MM.DD')}}</Box>
     <Box class="input-box" direction="column" padding="15px 0 15px">
       <input type="text" v-model="comment.content" />
       <Button class="btn" @click="$emit('commentwrite')">게시</Button>
@@ -27,24 +27,14 @@ export default {
       default() {
         return []
       }
-    },
-    user: {
-      type: Object,
-      default() {
-        return {}
-      }
     }
   },
-  created() {
-    console.log(this.comment)
-    console.log(this.user)
-  }
+  created() {}
 }
 </script>
 
 <style  lang="scss" scoped>
 .comment-page {
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

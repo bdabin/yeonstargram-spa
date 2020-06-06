@@ -5,12 +5,14 @@
         <Icon name="logo" />
       </template>
     </NavigationBar>
-    <div>mypage</div>
+    <mypage></mypage>
     <TabBar />
   </div>
 </template>
 
 <script>
+// import axios from 'axios'
+import mypage from '@/components/presentational/organisms/mypage/index.vue'
 import NavigationBar from '@/components/presentational/organisms/NavigationBar/index.vue'
 import TabBar from '@/components/presentational/organisms/TabBar/index.vue'
 
@@ -20,7 +22,21 @@ export default {
   components: {
     NavigationBar,
     TabBar,
-    Icon
+    Icon,
+    mypage
+  },
+  data() {
+    return {
+      myId: NaN
+    }
+  },
+  created() {
+    this.loadData()
+  },
+  methods: {
+    async loadData() {
+      this.myId = this.$store.state.user.id
+    }
   }
 }
 </script>

@@ -36,13 +36,14 @@ export default {
             icon: this.$route.path === '/mypage' ? 'user2' : 'user',
             activeIcon: 'user2',
             action: () => {
-              this.$router.push('/mypage')
+              this.$router.push(`/mypage/`)
             }
           }
         ]
       }
     }
-  }
+  },
+  created() {}
 }
 </script>
 
