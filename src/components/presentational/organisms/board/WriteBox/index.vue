@@ -5,7 +5,7 @@
         <textarea v-model="board.description" placeholder="내용을 입력하세요"></textarea>
       </Box>
       <Box padding="16px 0 0px">
-        <input type="text" placeholder="태그를 입력하세요 ex )#ootd #셀피" v-model="board.tag" />
+        <input type="text" placeholder="태그를 입력하세요 ex ) #ootd #셀피" v-model="board.tag" />
       </Box>
     </form>
   </Box>
