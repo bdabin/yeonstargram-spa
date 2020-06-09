@@ -1,7 +1,7 @@
 <template>
   <Box class="board-list-cell" direction="column" padding="0 0 16px">
     <Box class="board-list-header" vertical="center" padding="0 16px">
-      <Button type="title1" @click="$emit('mypage',post.id)">{{ post.User.username }}</Button>
+      <Button type="title1" @click="$emit('mypage',post.User.id)">{{ post.User.username }}</Button>
       <Button @click="$emit('more', post.id)">
         <Icon name="more" />
       </Button>

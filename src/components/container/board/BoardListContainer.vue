@@ -48,7 +48,8 @@ export default {
     return {
       posts: [],
       isList: false,
-      id: NaN
+      id: NaN,
+      pageId: NaN
     }
   },
   created() {
@@ -74,7 +75,6 @@ export default {
         })
     },
     onMore(id) {
-      console.log('더보기')
       this.isList = !this.isList
       this.id = id
     },
@@ -94,7 +94,6 @@ export default {
       }
     },
     onComment(id) {
-      console.log('코멘트 작성')
       this.$router.push(`/board/comment/${id}`)
     },
     edit(id) {
@@ -115,9 +114,8 @@ export default {
       }
     },
     mypage(id) {
-      console.log('this')
-
-      this.$router.push(`/mypage/${id}`)
+      this.pageId = id
+      this.$router.push(`/mypage/${this.pageId}`)
     },
 
     closeBtn() {
