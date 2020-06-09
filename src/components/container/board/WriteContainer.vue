@@ -33,8 +33,8 @@ export default {
   data() {
     return {
       board: {
-        title: '',
-        description: ''
+        description: '',
+        tag: ''
       },
       id: this.$route.params.id || null
     }
