@@ -36,7 +36,8 @@ export default {
         description: '',
         tag: ''
       },
-      id: this.$route.params.id || null
+      id: this.$route.params.id || null,
+      originTag: []
     }
   },
   created() {
@@ -46,8 +47,9 @@ export default {
     async routeIdCheck() {
       if (this.id) {
         await axios.get(`/api/board/write/${this.id}`).then(res => {
-          this.board.title = res.data.title
           this.board.description = res.data.description
+          this.originTag = res.data.hashtag.map(tag => tag.name)
+          this.board.tag = this.originTag.join(' ')
         })
       }
     },
@@ -74,9 +76,19 @@ export default {
     },
     async boardUpdate() {
       // 글 수정
-      const response = await axios.post(`/api/board/write/${this.id}`, {
+      let addTags = []
+      let removeTags = []
+      if (this.board.tag !== '') {
+        const changedTags = this.board.tag.split(' ')
+        addTags = changedTags.filter(tag => !this.originTag.includes(tag))
+        removeTags = this.originTag.filter(tag => !changedTags.includes(tag))
+      }
+
+      const response = await axios.put(`/api/board/write/${this.id}`, {
         ...this.board,
-        writer: this.$store.state.user.id
+        writer: this.$store.state.user.id,
+        addTags,
+        removeTags
       })
 
       if (response.status === 200) {
