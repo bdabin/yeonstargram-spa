@@ -33,7 +33,7 @@ export default {
             }
           },
           {
-            icon: this.$route.path === '/mypage' ? 'user2' : 'user',
+            icon: this.$route.path === `/mypage/${this.$store.state.user.id}` ? 'user2' : 'user',
             activeIcon: 'user2',
             action: () => {
               if (this.$route.path !== '/mypage') this.$router.push('/mypage')
@@ -42,7 +42,8 @@ export default {
         ]
       }
     }
-  }
+  },
+  created() {}
 }
 </script>
 

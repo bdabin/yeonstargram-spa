@@ -9,6 +9,7 @@
         @comment="(id) => $emit('comment',id)"
         @edit="(id) => $emit('edit',id)"
         @deleteExecution="(id) => $emit('deleteExecution',id)"
+        @mypage="(id) => $emit('mypage',id)"
       />
     </template>
   </Box>

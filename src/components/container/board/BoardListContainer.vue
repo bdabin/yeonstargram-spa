@@ -15,7 +15,13 @@
         <Icon name="logo" />
       </template>
     </NavigationBar>
-    <BoardListBox :posts="posts" @more="onMore" @like="onLike" @comment="onComment" />
+    <BoardListBox
+      :posts="posts"
+      @more="onMore"
+      @like="onLike"
+      @comment="onComment"
+      @mypage="mypage"
+    />
 
     <TabBar />
   </div>
@@ -42,7 +48,8 @@ export default {
     return {
       posts: [],
       isList: false,
-      id: NaN
+      id: NaN,
+      pageId: NaN
     }
   },
   created() {
@@ -68,10 +75,8 @@ export default {
         })
     },
     onMore(id) {
-      console.log('더보기')
       this.isList = !this.isList
       this.id = id
-      console.log(this.id)
     },
     async onLike(post) {
       const method = post.likeIt ? 'delete' : 'post'
@@ -89,7 +94,6 @@ export default {
       }
     },
     onComment(id) {
-      console.log('코멘트 작성')
       this.$router.push(`/board/comment/${id}`)
     },
     edit(id) {
@@ -108,6 +112,10 @@ export default {
           alert('삭제 할 수 없습니다.')
         }
       }
+    },
+    mypage(id) {
+      this.pageId = id
+      this.$router.push(`/mypage/${this.pageId}`)
     },
 
     closeBtn() {

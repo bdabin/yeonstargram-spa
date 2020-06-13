@@ -42,9 +42,9 @@ const routes = [
     path: '/board/write',
     name: '쓰기',
     component: () => import('../views/board/write'),
-    async beforeEnter(to,from,next) {
+    async beforeEnter(to, from, next) {
       await store.dispatch('isLogin')
-      if(!store.state.isLogin) {
+      if (!store.state.isLogin) {
         router.push('/account/login')
         return
       }
@@ -52,12 +52,25 @@ const routes = [
     }
   },
   {
-    path: '/mypage',
+    path: '/mypage/:id',
     name: '마이페이지',
     component: () => import('../views/mypage'),
-    async beforeEnter(to,from,next) {
+    async beforeEnter(to, from, next) {
       await store.dispatch('isLogin')
-      if(!store.state.isLogin) {
+      if (!store.state.isLogin) {
+        router.push('/account/login')
+        return
+      }
+      next()
+    }
+  },
+  {
+    path: '/mypage/following/:id',
+    name: '마이페이지',
+    component: () => import('../views/mypage/following.vue'),
+    async beforeEnter(to, from, next) {
+      await store.dispatch('isLogin')
+      if (!store.state.isLogin) {
         router.push('/account/login')
         return
       }
@@ -68,9 +81,9 @@ const routes = [
     path: '/board/write/:id',
     name: '수정',
     component: () => import('../views/board/write'),
-    async beforeEnter(to,from,next) {
+    async beforeEnter(to, from, next) {
       await store.dispatch('isLogin')
-      if(!store.state.isLogin) {
+      if (!store.state.isLogin) {
         router.push('/account/login')
         return
       }

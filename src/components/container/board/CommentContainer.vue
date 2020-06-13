@@ -5,7 +5,7 @@
         <Icon name="logo" />
       </template>
     </NavigationBar>
-    <CommentBox :comment="comment" :user="user" @commentwrite="commentwrite"></CommentBox>
+    <CommentBox :comment="comment" @commentwrite="commentwrite"></CommentBox>
   </div>
 </template>
 
@@ -24,15 +24,16 @@ export default {
   data() {
     return {
       comment: [],
-      user: {},
       id: this.$route.params.id || null
     }
   },
   methods: {
     async commentwrite() {
       const response = await axios.post(`/api/board/comment/${this.id}`, {
-        ...this.comment
+        ...this.comment,
+        writer: this.$store.state.user.id
       })
+
       if (response.status === 200) {
         this.$router.push('/board')
       }
@@ -41,8 +42,6 @@ export default {
       const response = await axios.get(`/api/board/comment/${this.id}`)
       if (response.status === 200) {
         this.comment = response.data.Reply
-        this.user = response.data.User
-        console.log(response.data.User)
       }
     }
   },
