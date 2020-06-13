@@ -23,21 +23,20 @@ export default {
           {
             icon: this.$route.path === '/board' ? 'home2' : 'home',
             action: () => {
-              this.$router.push('/board')
+              if (this.$route.path !== '/board') this.$router.push('/board')
             }
           },
           {
             icon: this.$route.path === '/board/write' ? 'plus2' : 'plus',
             action: () => {
-              this.$router.push('/board/write')
+              if (this.$route.path !== '/board/write') this.$router.push('/board/write')
             }
           },
           {
             icon: this.$route.path === `/mypage/${this.$store.state.user.id}` ? 'user2' : 'user',
             activeIcon: 'user2',
             action: () => {
-              if (this.$route.path !== `/mypage/${this.$store.state.user.id}`)
-                this.$router.push(`/mypage/${this.$store.state.user.id}`)
+              if (this.$route.path !== '/mypage') this.$router.push('/mypage')
             }
           }
         ]

@@ -1,11 +1,11 @@
 <template>
   <Box class="board-write" direction="column" horizontal="center" padding="16px" vertical="center">
     <form @submit.prevent>
-      <Box padding="0 0 16px">
-        <input type="text" placeholder="제목을 입력하세요" v-model="board.title" />
-      </Box>
       <Box>
         <textarea v-model="board.description" placeholder="내용을 입력하세요"></textarea>
+      </Box>
+      <Box padding="16px 0 0px">
+        <input type="text" placeholder="태그를 입력하세요 ex ) #ootd #셀피" v-model="board.tag" />
       </Box>
     </form>
   </Box>
@@ -46,7 +46,7 @@ export default {
   }
   textarea {
     width: 100%;
-    height: 400px;
+    height: 200px;
     border: 1px solid #eee;
     padding: 16px;
     border-radius: 10px;

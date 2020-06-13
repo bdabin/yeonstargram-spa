@@ -24,6 +24,9 @@
       <Span>
         <b>{{ post.User.username }}</b>
         {{ post.description }}
+        <template v-if="post.hashtag.length > 0">
+          <a v-for="(tag, index) in post.hashtag" href :key="index">{{tag.name}}</a>
+        </template>
       </Span>
     </Box>
   </Box>
@@ -92,6 +95,12 @@ export default {
   }
 
   .board-list-desc {
+    span {
+      a {
+        color: rgb(32, 59, 134);
+        margin-right: 5px;
+      }
+    }
   }
 }
 </style>
