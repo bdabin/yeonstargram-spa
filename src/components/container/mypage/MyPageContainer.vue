@@ -11,7 +11,18 @@
       @follow="followOn"
       @unfollow="unfollowOn"
       :isFollowing="isFollowing"
+      @followerlist="followerlist"
+      @followinglist="followinglist"
     ></mypage>
+    <!-- <label>
+      <input
+        type="file"
+        id="file"
+        name="url"
+        class="profile-input"
+        v-on:change="profileUpload($event.target.name,$event.target.files)"
+      />
+    </label>-->
     <TabBar />
   </div>
 </template>
@@ -36,7 +47,8 @@ export default {
       userId: this.$route.params.id || null,
       pageCheck: false,
       mypageInfo: {},
-      isFollowing: false
+      isFollowing: false,
+      profileImg: ''
     }
   },
   created() {
@@ -59,6 +71,7 @@ export default {
         }
       }
     },
+
     async followOn() {
       const response = await axios.post(`/api/account/follow/${this.$store.state.user.id}`, {
         from: this.$store.state.user.id,
@@ -81,6 +94,28 @@ export default {
         this.loadData()
         this.isFollowing = false
       }
+    },
+    // 이미지 업로드 테스트
+    // async profileUpload(name, files) {
+    //   const formData = await new FormData()
+    //   await formData.append(name, files[0], files[0].name)
+    //   const response = await axios.post(`/api/account/mypage/${this.$store.state.user.id}`, formData, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data'
+    //     }
+    //   })
+    //   if (response.status === 200) {
+    //     console.log(response)
+    //   }
+    //   console.log('a')
+    // },
+
+    followerlist() {
+      console.log('sdsd')
+    },
+    followinglist() {
+      console.log('aaa')
+      this.$router.push(`/mypage/following/${this.userId}`)
     }
   }
 }
