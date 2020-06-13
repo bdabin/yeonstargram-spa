@@ -36,7 +36,8 @@ export default {
             icon: this.$route.path === `/mypage/${this.$store.state.user.id}` ? 'user2' : 'user',
             activeIcon: 'user2',
             action: () => {
-              if (this.$route.path !== '/mypage') this.$router.push('/mypage')
+              if (this.$route.path !== `/mypage/${this.$store.state.user.id}`)
+                this.$router.push(`/mypage/${this.$store.state.user.id}`)
             }
           }
         ]
