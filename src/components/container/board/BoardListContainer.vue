@@ -1,15 +1,6 @@
 <template>
   <div>
-    <moreBar
-      v-show="isList"
-      @closeBtn="closeBtn"
-      :id="id"
-      @edit="edit"
-      @deleteExecution="deleteExecution"
-    ></moreBar>
-    <transition name="fade">
-      <div class="back" v-show="isList"></div>
-    </transition>
+    <moreBar v-show="isList" @closeBtn="closeBtn" @edit="edit" @deleteExecution="deleteExecution"></moreBar>
     <NavigationBar>
       <template #centerTitle>
         <Icon name="logo" />
@@ -47,9 +38,9 @@ export default {
   data() {
     return {
       posts: [],
+      // #TODO : isList 이름 바꾸기
       isList: false,
-      id: NaN,
-      pageId: NaN
+      id: NaN
     }
   },
   created() {
@@ -96,15 +87,16 @@ export default {
     onComment(id) {
       this.$router.push(`/board/comment/${id}`)
     },
-    edit(id) {
-      axios.get(`/api/board/write/${id}`).then(res => {
-        console.log(res)
-        this.$router.push(`/board/write/${id}`)
-      })
+    edit() {
+      this.$router.push(`/board/write/${this.id}`)
     },
-    async deleteExecution(id) {
+    async deleteExecution() {
       if (confirm('정말 삭제하시겠습니까?')) {
-        const response = await axios.get(`/api/board/delete/${id}`)
+        const response = await axios.delete(`/api/board/delete/${this.id}`)
+        // #TODO : 게시물 삭제 백앤드 api 수정
+        // const response = await axios.delete(`/api/board/delete`, {
+        //   board_id : this.id
+        // })
         if (response.status === 200) {
           this.loadData()
           this.isList = false
@@ -114,8 +106,7 @@ export default {
       }
     },
     mypage(id) {
-      this.pageId = id
-      this.$router.push(`/mypage/${this.pageId}`)
+      this.$router.push(`/mypage/${id}`)
     },
 
     closeBtn() {
@@ -126,22 +117,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.back {
-  background: rgba(0, 0, 0, 0.411);
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
 </style>

@@ -21,18 +21,19 @@ export default {
   },
   methods: {
     async login() {
-      if (this.user.email == '') {
+      const { email, password } = this.user
+      if (email == '') {
         alert('이메일을 입력해주세요')
         return
       }
-      if (this.user.password == '') {
+      if (password == '') {
         alert('비밀번호를 입력해주세요')
         return
       }
 
       await this.$store.dispatch('login', {
-        email: this.user.email,
-        password: this.user.password
+        email,
+        password
       })
 
       if (this.$store.state.isLogin) {

@@ -45,7 +45,10 @@ export default {
   data() {
     return {
       userId: this.$route.params.id || null,
+
+      // #TODO : name 보기 쉽게 변경
       pageCheck: false,
+
       mypageInfo: {},
       isFollowing: false,
       profileImg: ''
@@ -72,8 +75,9 @@ export default {
       }
     },
 
+    // #TODO : followOn,unfollowOn name 변경
     async followOn() {
-      const response = await axios.post(`/api/account/follow/${this.$store.state.user.id}`, {
+      const response = await axios.post(`/api/account/follow`, {
         from: this.$store.state.user.id,
         to: this.userId
       })
@@ -83,7 +87,7 @@ export default {
       }
     },
     async unfollowOn() {
-      const response = await axios.delete(`/api/account/follow/${this.$store.state.user.id}`, {
+      const response = await axios.delete(`/api/account/follow`, {
         data: {
           from: this.$store.state.user.id,
           to: this.userId
@@ -111,11 +115,11 @@ export default {
     // },
 
     followerlist() {
-      console.log('sdsd')
+      this.$router.push(`/mypage/follow/${this.userId}?type=follower`)
     },
     followinglist() {
       console.log('aaa')
-      this.$router.push(`/mypage/following/${this.userId}`)
+      this.$router.push(`/mypage/follow/${this.userId}?type=following`)
     }
   }
 }

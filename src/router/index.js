@@ -65,9 +65,9 @@ const routes = [
     }
   },
   {
-    path: '/mypage/following/:id',
+    path: '/mypage/follow/:id',
     name: '마이페이지',
-    component: () => import('../views/mypage/following.vue'),
+    component: () => import('../views/mypage/follow/index.vue'),
     async beforeEnter(to, from, next) {
       await store.dispatch('isLogin')
       if (!store.state.isLogin) {

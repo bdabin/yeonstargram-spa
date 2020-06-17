@@ -6,6 +6,7 @@
       </template>
     </NavigationBar>
     <CommentBox :comment="comment" @commentwrite="commentwrite"></CommentBox>
+    <!-- #TODO : 댓글 입력박스, 출력박스 구분, 삭제기능 추가 -->
   </div>
 </template>
 
@@ -23,13 +24,18 @@ export default {
   },
   data() {
     return {
+      // #TODO : 입력 data, 출력 data 구분
       comment: [],
       id: this.$route.params.id || null
     }
   },
+  created() {
+    this.loadData()
+  },
   methods: {
     async commentwrite() {
-      const response = await axios.post(`/api/board/comment/${this.id}`, {
+      // 입력 데이터로 api 전송
+      const response = await axios.post(`/api/board/${this.id}/comment`, {
         ...this.comment,
         writer: this.$store.state.user.id
       })
@@ -39,14 +45,11 @@ export default {
       }
     },
     async loadData() {
-      const response = await axios.get(`/api/board/comment/${this.id}`)
+      const response = await axios.get(`/api/board/${this.id}/comment`)
       if (response.status === 200) {
         this.comment = response.data.Reply
       }
     }
-  },
-  created() {
-    this.loadData()
   }
 }
 </script>

@@ -17,7 +17,7 @@
         <P>팔로잉</P>
       </Button>
     </Box>
-    <Box v-if="this.pageCheck">
+    <Box v-if="pageCheck">
       <template v-if="!isFollowing">
         <Button @click="$emit('follow')">
           <RoundBox radius="5px" padding="5px 50px">팔로우</RoundBox>
