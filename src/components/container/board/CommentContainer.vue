@@ -5,26 +5,30 @@
         <Icon name="logo" />
       </template>
     </NavigationBar>
-    <CommentBox :comment="comment" @commentwrite="commentwrite"></CommentBox>
+    <CommentBoxList :comment="comment" @addcount="addcount" @nows="nows" :right="right" />
+    <CommentBoxInput v-model="description" @commentwrite="commentwrite" />
     <!-- #TODO : 댓글 입력박스, 출력박스 구분, 삭제기능 추가 -->
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import CommentBox from '@/components/presentational/organisms/board/CommentBox/index.vue'
+import CommentBoxList from '@/components/presentational/organisms/board/CommentBox/List.vue'
+import CommentBoxInput from '@/components/presentational/organisms/board/CommentBox/Input.vue'
 import NavigationBar from '@/components/presentational/organisms/NavigationBar/index.vue'
 
 import Icon from '@/components/common/Icon'
 export default {
   components: {
-    CommentBox,
+    CommentBoxList,
     NavigationBar,
+    CommentBoxInput,
     Icon
   },
   data() {
     return {
       // #TODO : 입력 data, 출력 data 구분
+      description: '',
       comment: [],
       id: this.$route.params.id || null
     }
@@ -35,19 +39,16 @@ export default {
   methods: {
     async commentwrite() {
       // 입력 데이터로 api 전송
-      const response = await axios.post(`/api/board/${this.id}/comment`, {
-        ...this.comment,
+      await axios.post(`/api/board/${this.id}/comment`, {
+        content: this.description,
         writer: this.$store.state.user.id
       })
-
-      if (response.status === 200) {
-        this.$router.push('/board')
-      }
+      this.loadData()
     },
     async loadData() {
       const response = await axios.get(`/api/board/${this.id}/comment`)
       if (response.status === 200) {
-        this.comment = response.data.Reply
+        this.comment = response.data.filter(comment => comment.writer)
       }
     }
   }

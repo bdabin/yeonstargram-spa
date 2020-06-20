@@ -1,11 +1,13 @@
 <template>
   <Box>
     <!-- #TODO : 트랜지션 구현 -->
+
     <transition name="fade">
-      <div class="back"></div>
+      <div class="back" v-if="isMoreBtn"></div>
     </transition>
+
     <transition name="slide-up">
-      <Box class="more-bar" direction="column" padding="10px">
+      <Box class="more-bar" direction="column" padding="10px" v-if="isMoreBtn">
         <Box class="edit-box" direction="column">
           <Box direction="column" class="boxWrap">
             <Box class="box2">
@@ -15,7 +17,7 @@
               <Button class="editBtn" @click="$emit('edit')">수정</Button>
             </Box>
           </Box>
-          <Box class="box2">
+          <Box class="box2 cancelW">
             <Button class="cancel" @click="$emit('closeBtn')">취소</Button>
           </Box>
         </Box>
@@ -31,6 +33,14 @@ export default {
   components: {
     Box,
     Button
+  },
+  props: {
+    isMoreBtn: {
+      type: Boolean,
+      default() {
+        return {}
+      }
+    }
   }
 }
 </script>
@@ -58,8 +68,8 @@ export default {
       overflow: hidden;
     }
     .cancel {
-      background: #444;
-      color: #fff;
+      background: #fff;
+      color: #333;
       display: block;
       height: 50px;
       line-height: 50px;
@@ -71,10 +81,14 @@ export default {
     }
     .box2 {
       width: 100%;
+      border-top: 1px solid #dedede;
+    }
+    .box2.cancelW {
+      border-top: none;
     }
     .editBtn {
-      background: #444;
-      color: #fff;
+      background: #fff;
+      color: #333;
       display: block;
       height: 50px;
       line-height: 50px;

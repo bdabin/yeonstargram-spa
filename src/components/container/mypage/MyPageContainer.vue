@@ -8,21 +8,13 @@
     <mypage
       :mypageInfo="mypageInfo"
       :pageCheck="pageCheck"
-      @follow="followOn"
-      @unfollow="unfollowOn"
+      @follow="follow"
+      @unfollow="unfollow"
       :isFollowing="isFollowing"
       @followerlist="followerlist"
       @followinglist="followinglist"
     ></mypage>
-    <!-- <label>
-      <input
-        type="file"
-        id="file"
-        name="url"
-        class="profile-input"
-        v-on:change="profileUpload($event.target.name,$event.target.files)"
-      />
-    </label>-->
+    <mypageboardlist :mypageInfo="mypageInfo" />
     <TabBar />
   </div>
 </template>
@@ -30,6 +22,7 @@
 <script>
 import axios from 'axios'
 import mypage from '@/components/presentational/organisms/mypage/index.vue'
+import mypageboardlist from '@/components/presentational/organisms/mypage/BoardListBox.vue'
 import NavigationBar from '@/components/presentational/organisms/NavigationBar/index.vue'
 import TabBar from '@/components/presentational/organisms/TabBar/index.vue'
 
@@ -40,7 +33,8 @@ export default {
     NavigationBar,
     TabBar,
     Icon,
-    mypage
+    mypage,
+    mypageboardlist
   },
   data() {
     return {
@@ -68,16 +62,16 @@ export default {
       const response = await axios.get(`/api/account/mypage/${this.userId}`)
       if (response.status === 200) {
         this.mypageInfo = response.data
-        if (this.mypageInfo.Follower.length > 0) {
-          const result = this.mypageInfo.Follower.find(user => user.id === this.$store.state.user.id)
-          this.isFollowing = Boolean(result)
+        const result = this.mypageInfo.checkFollower.length
+        if (result == 1) {
+          this.isFollowing = true
         }
       }
     },
 
     // #TODO : followOn,unfollowOn name 변경
-    async followOn() {
-      const response = await axios.post(`/api/account/follow`, {
+    async follow() {
+      const response = await axios.post(`/api/account/follow/${this.$store.state.user.id}`, {
         from: this.$store.state.user.id,
         to: this.userId
       })
@@ -86,7 +80,7 @@ export default {
         this.loadData()
       }
     },
-    async unfollowOn() {
+    async unfollow() {
       const response = await axios.delete(`/api/account/follow`, {
         data: {
           from: this.$store.state.user.id,
@@ -99,26 +93,11 @@ export default {
         this.isFollowing = false
       }
     },
-    // 이미지 업로드 테스트
-    // async profileUpload(name, files) {
-    //   const formData = await new FormData()
-    //   await formData.append(name, files[0], files[0].name)
-    //   const response = await axios.post(`/api/account/mypage/${this.$store.state.user.id}`, formData, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data'
-    //     }
-    //   })
-    //   if (response.status === 200) {
-    //     console.log(response)
-    //   }
-    //   console.log('a')
-    // },
 
     followerlist() {
       this.$router.push(`/mypage/follow/${this.userId}?type=follower`)
     },
     followinglist() {
-      console.log('aaa')
       this.$router.push(`/mypage/follow/${this.userId}?type=following`)
     }
   }

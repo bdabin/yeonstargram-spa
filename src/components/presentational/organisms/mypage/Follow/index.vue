@@ -1,16 +1,18 @@
 <template>
-  <Box direction="column">
-    <Box class="following-box" v-if="this.$route.query.type == 'following'">
-      <Box
-        v-for="(followingI,index) in followInfo.Following"
-        :key="`A-${index}`"
-      >{{followingI.username}}</Box>
-    </Box>
-    <Box class="follower-box" v-if="this.$route.query.type =='follower'" direction="column">
-      <Button v-for="(followerI,index) in followInfo.Follower" :key="`A-${index}`">
-        <Box direction="row">
+  <Box direction="column" padding="20px">
+    <Box class="follow-boxs" v-if="this.$route.query.type == 'following'">
+      <Button v-for="(followingI,index) in followInfo.Following" :key="`A-${index}`">
+        <Box direction="row" class="follow-box" horizontal="left">
           <RoundBox radius="50px" class="profile-img"></RoundBox>
-          <Box>{{followerI.username}}</Box>
+          <Box class="username" padding="0 20px">{{followingI.username}}</Box>
+        </Box>
+      </Button>
+    </Box>
+    <Box class="follow-boxs" v-if="this.$route.query.type =='follower'" direction="column">
+      <Button v-for="(followerI,index) in followInfo.Follower" :key="`A-${index}`">
+        <Box direction="row" horizontal="left" class="follow-box" vertical="center">
+          <RoundBox radius="50px" class="profile-img"></RoundBox>
+          <Box class="username" padding="0 20px">{{followerI.username}}</Box>
         </Box>
       </Button>
     </Box>
@@ -42,9 +44,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.following-box {
+.follow-boxs {
   width: 100%;
   height: 100%;
+  .follow-box {
+    width: 100%;
+    margin-bottom: 10px;
+    .username {
+      height: 100%;
+    }
+  }
 }
 .profile-img {
   cursor: pointer;

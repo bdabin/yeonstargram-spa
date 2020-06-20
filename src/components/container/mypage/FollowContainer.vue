@@ -40,10 +40,6 @@ export default {
 
       if (response.status === 200) {
         this.followInfo = response.data
-        if (this.followInfo.Follower.length > 0) {
-          const result = this.followInfo.Follower.find(user => user.id === this.$store.state.user.id)
-          this.isFollowing = Boolean(result)
-        }
       }
     }
   }

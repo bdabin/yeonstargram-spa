@@ -1,6 +1,11 @@
 <template>
   <div>
-    <moreBar v-show="isList" @closeBtn="closeBtn" @edit="edit" @deleteExecution="deleteExecution"></moreBar>
+    <moreBar
+      @closeBtn="closeBtn"
+      @edit="edit"
+      @deleteExecution="deleteExecution"
+      :isMoreBtn="isMoreBtn"
+    ></moreBar>
     <NavigationBar>
       <template #centerTitle>
         <Icon name="logo" />
@@ -38,8 +43,8 @@ export default {
   data() {
     return {
       posts: [],
-      // #TODO : isList 이름 바꾸기
-      isList: false,
+      // #TODO : isList 이름 바꾸기 -> isMoreBtn으로 변경
+      isMoreBtn: false,
       id: NaN
     }
   },
@@ -66,7 +71,7 @@ export default {
         })
     },
     onMore(id) {
-      this.isList = !this.isList
+      this.isMoreBtn = !this.isMoreBtn
       this.id = id
     },
     async onLike(post) {
@@ -85,7 +90,7 @@ export default {
       }
     },
     onComment(id) {
-      this.$router.push(`/board/comment/${id}`)
+      this.$router.push(`/board/${id}/comment`)
     },
     edit() {
       this.$router.push(`/board/write/${this.id}`)
@@ -93,13 +98,13 @@ export default {
     async deleteExecution() {
       if (confirm('정말 삭제하시겠습니까?')) {
         const response = await axios.delete(`/api/board/delete/${this.id}`)
-        // #TODO : 게시물 삭제 백앤드 api 수정
+        // #TODO : 게시물 삭제 백앤드 api 수정 => 수정완료
         // const response = await axios.delete(`/api/board/delete`, {
         //   board_id : this.id
         // })
         if (response.status === 200) {
           this.loadData()
-          this.isList = false
+          this.isMoreBtn = false
         } else {
           alert('삭제 할 수 없습니다.')
         }
@@ -110,11 +115,25 @@ export default {
     },
 
     closeBtn() {
-      this.isList = !this.isList
+      this.isMoreBtn = !this.isMoreBtn
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.slide-up {
+  transition: all 0.25s;
+}
+.slide-up-enter-active {
+  transition: all 0.25s ease;
+}
+.slide-up-leave-active {
+  transition: all 0.25s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-up-enter,
+.slide-up-leave-active {
+  opacity: 0;
+  transform: translateY(100%);
+}
 </style>
