@@ -81,7 +81,7 @@ export default {
       }
     },
     async unfollow() {
-      const response = await axios.delete(`/api/account/follow`, {
+      const response = await axios.delete(`/api/account/follow/${this.$store.state.user.id}`, {
         data: {
           from: this.$store.state.user.id,
           to: this.userId
