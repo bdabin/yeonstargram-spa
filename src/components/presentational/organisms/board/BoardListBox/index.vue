@@ -2,6 +2,7 @@
   <Box direction="column">
     <template v-for="post in posts">
       <Cell
+        :loading="loading"
         :key="post.id"
         :post="post"
         @more="(id) => $emit('more', id)"
@@ -28,8 +29,12 @@ export default {
     posts: {
       type: Array,
       default() {
-        return []
+        return [{}]
       }
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   }
 }

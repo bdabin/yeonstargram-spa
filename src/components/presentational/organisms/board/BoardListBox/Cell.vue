@@ -1,15 +1,19 @@
 <template>
   <Box class="board-list-cell" direction="column" padding="0 0 16px">
     <Box class="board-list-header" vertical="center" padding="0 16px">
-      <Button type="title1" @click="$emit('mypage',post.User.id)">{{ post.User.username }}</Button>
+      <Button type="title1" @click="$emit('mypage',post.User.id)">{{ username }}</Button>
       <Button @click="$emit('more', post.id)">
         <Icon name="more" />
       </Button>
     </Box>
-
-    <Box class="board-list-title" vertical="center" horizontal="center">
-      <Span>{{ post.title }}</Span>
-    </Box>
+    <Box
+      class="board-list-img"
+      vertical="center"
+      horizontal="center"
+      :class="filter"
+      :style="`background-image:url(${img})`"
+      padding="0 0 100%"
+    ></Box>
 
     <Box class="board-list-option" padding="0px 16px" vertical="center">
       <Button @click="$emit('like',post)">
@@ -22,9 +26,9 @@
 
     <Box class="board-list-desc" padding="12px 16px">
       <Span>
-        <b>{{ post.User.username }}</b>
+        <b>{{ username }}</b>
         {{ post.description }}
-        <template v-if="post.hashtag.length > 0">
+        <template v-if="post.hashtag">
           <a v-for="(tag, index) in post.hashtag" href :key="index">{{tag.name}}</a>
         </template>
       </Span>
@@ -45,12 +49,27 @@ export default {
     Icon,
     Box
   },
-  props: {
-    post: {
-      type: Object,
-      default() {
-        return {}
+  props: ['post', 'loading'],
+  computed: {
+    filter() {
+      if (this.loading) {
+        return ''
       }
+      return this.post.Photo ? this.post.Photo.filter : ''
+    },
+    img() {
+      if (this.loading) {
+        return ''
+      }
+
+      return this.post.image ? this.post.image : ''
+    },
+    username() {
+      if (this.loading) {
+        return ''
+      }
+
+      return this.post.User ? this.post.User.username : ''
     }
   }
 }
@@ -74,14 +93,10 @@ export default {
     }
   }
 
-  .board-list-title {
-    height: 100px;
-    background-color: #020202;
-    span {
-      color: #fff;
-      font-weight: bold;
-      font-size: 20px;
-    }
+  .board-list-img {
+    width: 100%;
+    background-size: cover;
+    background-position: center;
   }
 
   .board-list-option {
