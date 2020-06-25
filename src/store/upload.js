@@ -1,11 +1,9 @@
-import Axios from "axios"
-
 const upload = {
   state: {
-    image:'',
+    image: '',
     data: undefined
   },
-  mutations:{
+  mutations: {
     setImage(state, payload) {
       const { image, data } = payload
       state.image = image
@@ -15,18 +13,18 @@ const upload = {
       state.image = ''
     }
   },
-  actions:{
-    async imageUpload({commit}, payload) {
+  actions: {
+    async imageUpload({ commit }, payload) {
       const files = payload.files;
 
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
-      
-			reader.onload = e => {
-        commit('setImage', { image:e.target.result, data : files[0] })
-			};
+
+      reader.onload = e => {
+        commit('setImage', { image: e.target.result, data: files[0] })
+      };
     },
-    imageReset({commit}) {
+    imageReset({ commit }) {
       commit('resetImage')
     }
   }
