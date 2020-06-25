@@ -1,21 +1,29 @@
 <template>
-  <transition name="slide-up">
-    <Box class="more-bar" direction="column" padding="10px">
-      <Box class="edit-box" direction="column">
-        <Box direction="column" class="boxWrap">
-          <Box class="box2">
-            <Button class="editBtn e2" @click="$emit('deleteExecution',id)">삭제</Button>
+  <Box>
+    <!-- #TODO : 트랜지션 구현 -->
+
+    <transition name="fade">
+      <div class="back" v-if="isMoreBtn"></div>
+    </transition>
+
+    <transition name="slide-up">
+      <Box class="more-bar" direction="column" padding="10px" v-if="isMoreBtn">
+        <Box class="edit-box" direction="column">
+          <Box direction="column" class="boxWrap">
+            <Box class="box2">
+              <Button class="editBtn e2" @click="$emit('deleteExecution')">삭제</Button>
+            </Box>
+            <Box class="box2">
+              <Button class="editBtn" @click="$emit('edit')">수정</Button>
+            </Box>
           </Box>
-          <Box class="box2">
-            <Button class="editBtn" @click="$emit('edit',id)">수정</Button>
+          <Box class="box2 cancelW">
+            <Button class="cancel" @click="$emit('closeBtn')">취소</Button>
           </Box>
-        </Box>
-        <Box class="box2">
-          <Button class="cancel" @click="$emit('closeBtn')">취소</Button>
         </Box>
       </Box>
-    </Box>
-  </transition>
+    </transition>
+  </Box>
 </template>
 
 <script>
@@ -27,13 +35,12 @@ export default {
     Button
   },
   props: {
-    id: {
-      type: Number,
-      default: 0
+    isMoreBtn: {
+      type: Boolean,
+      default() {
+        return {}
+      }
     }
-  },
-  data() {
-    return {}
   }
 }
 </script>
@@ -61,8 +68,8 @@ export default {
       overflow: hidden;
     }
     .cancel {
-      background: #444;
-      color: #fff;
+      background: #fff;
+      color: #333;
       display: block;
       height: 50px;
       line-height: 50px;
@@ -74,10 +81,14 @@ export default {
     }
     .box2 {
       width: 100%;
+      border-top: 1px solid #dedede;
+    }
+    .box2.cancelW {
+      border-top: none;
     }
     .editBtn {
-      background: #444;
-      color: #fff;
+      background: #fff;
+      color: #333;
       display: block;
       height: 50px;
       line-height: 50px;
@@ -106,5 +117,23 @@ export default {
 .slide-up-leave-active {
   opacity: 0;
   transform: translateY(100%);
+}
+.back {
+  background: rgba(0, 0, 0, 0.411);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

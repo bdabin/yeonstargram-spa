@@ -1,15 +1,11 @@
 <template>
   <div>
     <moreBar
-      v-show="isList"
       @closeBtn="closeBtn"
-      :id="id"
       @edit="edit"
       @deleteExecution="deleteExecution"
+      :isMoreBtn="isMoreBtn"
     ></moreBar>
-    <transition name="fade">
-      <div class="back" v-show="isList"></div>
-    </transition>
     <NavigationBar>
       <template #centerTitle>
         <Icon name="logo" />
@@ -46,11 +42,11 @@ export default {
   },
   data() {
     return {
-      loading: false,
-      posts: [{}],
-      isList: false,
-      id: NaN,
-      pageId: NaN
+        loading: false,
+       posts: [{}],
+      // #TODO : isList 이름 바꾸기 -> isMoreBtn으로 변경
+      isMoreBtn: false,
+      id: NaN
     }
   },
   created() {
@@ -83,7 +79,7 @@ export default {
       this.loading = false
     },
     onMore(id) {
-      this.isList = !this.isList
+      this.isMoreBtn = !this.isMoreBtn
       this.id = id
     },
     async onLike(post) {
@@ -102,54 +98,50 @@ export default {
       }
     },
     onComment(id) {
-      this.$router.push(`/board/comment/${id}`)
+      this.$router.push(`/board/${id}/comment`)
     },
-    edit(id) {
-      axios.get(`/api/board/write/${id}`).then(res => {
-        console.log(res)
-        this.$router.push(`/board/write/${id}`)
-      })
+    edit() {
+      this.$router.push(`/board/write/${this.id}`)
     },
-    async deleteExecution(id) {
+    async deleteExecution() {
       if (confirm('정말 삭제하시겠습니까?')) {
-        const response = await axios.get(`/api/board/delete/${id}`)
+        const response = await axios.delete(`/api/board/delete/${this.id}`)
+        // #TODO : 게시물 삭제 백앤드 api 수정 => 수정완료
+        // const response = await axios.delete(`/api/board/delete`, {
+        //   board_id : this.id
+        // })
         if (response.status === 200) {
           this.loadData()
-          this.isList = false
+          this.isMoreBtn = false
         } else {
           alert('삭제 할 수 없습니다.')
         }
       }
     },
     mypage(id) {
-      this.pageId = id
-      this.$router.push(`/mypage/${this.pageId}`)
+      this.$router.push(`/mypage/${id}`)
     },
 
     closeBtn() {
-      this.isList = !this.isList
+      this.isMoreBtn = !this.isMoreBtn
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.back {
-  background: rgba(0, 0, 0, 0.411);
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9;
+.slide-up {
+  transition: all 0.25s;
 }
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s;
+.slide-up-enter-active {
+  transition: all 0.25s ease;
 }
-.fade-enter,
-.fade-leave-to {
+.slide-up-leave-active {
+  transition: all 0.25s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-up-enter,
+.slide-up-leave-active {
   opacity: 0;
+  transform: translateY(100%);
 }
 </style>
