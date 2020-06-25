@@ -1,6 +1,6 @@
 <template>
-  <Box direction="column" padding="0 20px">
-    <Box direction="row" class="profile-box" padding="30px 0px">
+  <Box direction="column" padding="30px 0" class="profile-box">
+    <Box direction="row" class="profile-info" padding="0 20px">
       <Box direction="column" class="conBox" horizontal="center">
         <RoundBox radius="50px" direction="row" class="profile-img"></RoundBox>
       </Box>
@@ -17,10 +17,10 @@
         <P>팔로잉</P>
       </Button>
     </Box>
-    <Box v-if="this.pageCheck">
+    <Box v-if="pageCheck" class="follow-btn-box" padding="10px 20px 0">
       <template v-if="!isFollowing">
         <Button @click="$emit('follow')">
-          <RoundBox radius="5px" padding="5px 50px">팔로우</RoundBox>
+          <RoundBox radius="5px" padding="5px 50px" class="follow-btn">팔로우</RoundBox>
         </Button>
       </template>
       <template v-else>
@@ -29,21 +29,10 @@
         </Button>
       </template>
     </Box>
-
-    <!-- <Box>팔로워 : {{follower}}</Box>
-    <Box v-for="(followerI,index) in mypageInfo.Follower" :key="`A-${index}`">{{followerI.username}}</Box>
-    <br />
-    <Box>팔로우 : {{following}}</Box>
-    <Box
-      v-for="(followingI,index) in mypageInfo.Following"
-      :key="`B-${index}`"
-    >{{followingI.username}}</Box>-->
   </Box>
 </template>
 
 <script>
-// import Icon from '@/components/common/Icon'
-// import Span from '@/components/presentational/atoms/Span'
 import P from '@/components/presentational/atoms/P'
 import Button from '@/components/presentational/atoms/Button'
 import Box from '@/components/presentational/molecules/Box'
@@ -52,8 +41,6 @@ export default {
   components: {
     Button,
     P,
-    // Span,
-    // Icon,
     Box,
     RoundBox
   },
@@ -75,14 +62,14 @@ export default {
   },
   computed: {
     follower() {
-      if (this.mypageInfo.Follower) {
-        return this.mypageInfo.Follower.length
+      if (this.mypageInfo.follower) {
+        return this.mypageInfo.follower
       }
       return 0
     },
     following() {
-      if (this.mypageInfo.Following) {
-        return this.mypageInfo.Following.length
+      if (this.mypageInfo.following) {
+        return this.mypageInfo.following
       }
       return 0
     },
@@ -98,31 +85,37 @@ export default {
 
 <style lang="scss" scoped>
 .profile-box {
-  width: 100%;
-  .conBox {
-    width: 25%;
-    font-size: 16px;
-    cursor: pointer;
-    .profile-img {
+  border-bottom: 1px solid #dedede;
+  .profile-info {
+    width: 100%;
+
+    .conBox {
+      width: 25%;
+      font-size: 16px;
       cursor: pointer;
-      width: 50px;
-      height: 50px;
-      border: 2px solid #dedede;
-      margin: 0 auto;
-    }
-    p,
-    button {
-      width: 100%;
-      text-align: center;
-    }
-    .profile-input {
-      display: none;
+      .profile-img {
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        border: 2px solid #dedede;
+        margin: 0 auto;
+      }
+      p,
+      button {
+        width: 100%;
+        text-align: center;
+      }
+      .profile-input {
+        display: none;
+      }
     }
   }
-}
-.following-btn {
-  background: #0195f7;
-  border: none;
-  color: #fff;
+  .follow-btn-box {
+    .follow-btn {
+      background: #0195f7;
+      color: #fff;
+      border: none;
+    }
+  }
 }
 </style>
