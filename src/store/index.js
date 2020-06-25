@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import upload from './upload'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  modules:{
+    upload:upload
+  },
   state: {
     isLogin:false,
     user:{
@@ -55,5 +59,6 @@ export default new Vuex.Store({
         commit('isLogin', false)
       }
     }
-  }
+  },
+  
 })

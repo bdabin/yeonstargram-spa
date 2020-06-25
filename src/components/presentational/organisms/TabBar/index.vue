@@ -3,6 +3,7 @@
     <Box v-for="(menu, index) in menuItems" :key="index" @click.native="menu.action">
       <Icon :name="menu.icon" width="24px" />
     </Box>
+    <input type="file" name="url" ref="uploader" class="inputfile" id="file" @change="fileUpload" />
   </Box>
 </template>
 
@@ -23,12 +24,16 @@ export default {
           {
             icon: this.$route.path === '/board' ? 'home2' : 'home',
             action: () => {
+              if (this.$store.state.upload.image) {
+                this.$store.dispatch('imageReset')
+              }
               if (this.$route.path !== '/board') this.$router.push('/board')
             }
           },
           {
             icon: this.$route.path === '/board/write' ? 'plus2' : 'plus',
             action: () => {
+              this.$refs.uploader.click()
               if (this.$route.path !== '/board/write') this.$router.push('/board/write')
             }
           },
@@ -36,6 +41,9 @@ export default {
             icon: this.$route.path === `/mypage/${this.$store.state.user.id}` ? 'user2' : 'user',
             activeIcon: 'user2',
             action: () => {
+              if (this.$store.state.upload.image) {
+                this.$store.dispatch('imageReset')
+              }
               if (this.$route.path !== `/mypage/${this.$store.state.user.id}`)
                 this.$router.push(`/mypage/${this.$store.state.user.id}`)
             }
@@ -44,7 +52,11 @@ export default {
       }
     }
   },
-  created() {}
+  methods: {
+    fileUpload(e) {
+      this.$store.dispatch('imageUpload', e.target)
+    }
+  }
 }
 </script>
 
@@ -59,5 +71,11 @@ export default {
   z-index: 2;
   background-color: #fff;
   justify-content: space-between !important;
+}
+input[type='file'] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
 }
 </style>

@@ -5,6 +5,7 @@
 </template>
 
 <style lang="scss">
+@import './assets/scss/filter';
 * {
   padding: 0;
   margin: 0;

@@ -12,13 +12,13 @@
       </template>
     </NavigationBar>
     <BoardListBox
+      :loading="loading"
       :posts="posts"
       @more="onMore"
       @like="onLike"
       @comment="onComment"
       @mypage="mypage"
     />
-
     <TabBar />
   </div>
 </template>
@@ -42,7 +42,8 @@ export default {
   },
   data() {
     return {
-      posts: [],
+        loading: false,
+       posts: [{}],
       // #TODO : isList 이름 바꾸기 -> isMoreBtn으로 변경
       isMoreBtn: false,
       id: NaN
@@ -53,9 +54,15 @@ export default {
   },
   methods: {
     async loadData() {
+      this.loading = true
       const response = await axios.get('/api/board')
       this.posts = response.data
         .map(post => {
+          if (post.Photo) {
+            const url = post.Photo.url.split('/')
+            post.image = `/api/image/${url[url.length - 1]}`
+          }
+
           const result = post.like.find(data => data.user_id === this.$store.state.user.id)
           post.likeIt = Boolean(result)
           return post
@@ -69,6 +76,7 @@ export default {
             return 0
           }
         })
+      this.loading = false
     },
     onMore(id) {
       this.isMoreBtn = !this.isMoreBtn
