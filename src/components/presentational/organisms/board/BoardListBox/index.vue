@@ -1,5 +1,5 @@
 <template>
-  <Box direction="column">
+  <div direction="column">
     <template v-for="post in posts">
       <Cell
         :loading="loading"
@@ -13,7 +13,7 @@
         @mypage="(id) => $emit('mypage',id)"
       />
     </template>
-  </Box>
+  </div>
 </template>
 
 <script>

@@ -15,7 +15,7 @@
       @followerlist="followerlist"
       @followinglist="followinglist"
     ></mypage>
-    <mypageboardlist :mypageInfo="mypageInfo" />
+    <mypageboardlist :boards="boards" @detail="detail" />
     <TabBar />
   </div>
 </template>
@@ -47,7 +47,8 @@ export default {
       mypageInfo: {},
       isFollowing: false,
       profileImg: '',
-      loading: false
+      loading: false,
+      boards: []
     }
   },
   created() {
@@ -68,15 +69,25 @@ export default {
         if (result == 1) {
           this.isFollowing = true
         }
+
+        this.boards = response.data.BoardList.sort((a, b) => {
+          if (a.id > b.id) {
+            return -1
+          } else if (a.id < b.id) {
+            return 1
+          } else {
+            return 0
+          }
+        }).map(board => {
+          if (board.Photo) {
+            const url = board.Photo.url.split('/')
+            board.image = `/api/image/${url[url.length - 1]}`
+            board.filter = board.Photo.filter
+          }
+          return board
+        })
       }
-      //
-      this.mypageInfo.BoardList = await this.mypageInfo.BoardList.map(board => {
-        if (board.Photo) {
-          const url = board.Photo.url.split('/')
-          board.image = `/api/image/${url[url.length - 1]}`
-        }
-        return board
-      })
+
       this.loading = false
     },
 
@@ -110,6 +121,9 @@ export default {
     },
     followinglist() {
       this.$router.push(`/mypage/follow/${this.userId}?type=following`)
+    },
+    detail(id) {
+      this.$router.push(`/detail?user=${this.userId}&id=${id}`)
     }
   }
 }
