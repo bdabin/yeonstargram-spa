@@ -66,8 +66,21 @@ const routes = [
   },
   {
     path: '/mypage/follow/:id',
-    name: '마이페이지',
+    name: '팔로우',
     component: () => import('../views/mypage/follow/index.vue'),
+    async beforeEnter(to, from, next) {
+      await store.dispatch('isLogin')
+      if (!store.state.isLogin) {
+        router.push('/account/login')
+        return
+      }
+      next()
+    }
+  },
+  {
+    path: '/mypage/:id/profile',
+    name: '프로필',
+    component: () => import('../views/mypage/profile/index.vue'),
     async beforeEnter(to, from, next) {
       await store.dispatch('isLogin')
       if (!store.state.isLogin) {

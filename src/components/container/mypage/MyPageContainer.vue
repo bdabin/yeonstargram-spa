@@ -7,12 +7,14 @@
     </NavigationBar>
     <mypage
       :mypageInfo="mypageInfo"
+      :loading="loading"
       :pageCheck="pageCheck"
       @follow="follow"
       @unfollow="unfollow"
       :isFollowing="isFollowing"
       @followerlist="followerlist"
       @followinglist="followinglist"
+      @profile-edit="profileEdit"
     ></mypage>
     <mypageboardlist :mypageInfo="mypageInfo" />
     <TabBar />
@@ -45,7 +47,7 @@ export default {
 
       mypageInfo: {},
       isFollowing: false,
-      profileImg: ''
+      loading: false
     }
   },
   created() {
@@ -58,7 +60,7 @@ export default {
       } else {
         this.pageCheck = true
       }
-
+      this.loading = true
       const response = await axios.get(`/api/account/mypage/${this.userId}`)
       if (response.status === 200) {
         this.mypageInfo = response.data
@@ -67,6 +69,20 @@ export default {
           this.isFollowing = true
         }
       }
+      //
+      this.mypageInfo.BoardList = await this.mypageInfo.BoardList.map(board => {
+        if (board.Photo) {
+          const url = board.Photo.url.split('/')
+          board.image = `/api/image/${url[url.length - 1]}`
+        }
+        return board
+      })
+
+      //프로필 이미지
+      const url = this.mypageInfo.Profile.url.split('/')
+      this.mypageInfo.Profile.url = `/api/image/${url[url.length - 1]}`
+
+      this.loading = false
     },
 
     // #TODO : followOn,unfollowOn name 변경
@@ -99,6 +115,9 @@ export default {
     },
     followinglist() {
       this.$router.push(`/mypage/follow/${this.userId}?type=following`)
+    },
+    profileEdit() {
+      this.$router.push(`/mypage/${this.userId}/profile`)
     }
   }
 }

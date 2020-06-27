@@ -1,25 +1,33 @@
 <template>
   <Box class="comment-page" direction="column" padding="50px 0 40px">
-    <Box class="content-boxW" direction="column" v-for="(commentI,index) in comment" :key="index">
-      <div class="www" @touchend="$emit('addcount')" v-on:touchstart="$emit('nows')">
+    <Box class="content-boxW" direction="column" v-for="(comment,index) in comments" :key="index">
+      <div
+        class="box-wrap"
+        @click="$emit('moveCoordinates', comment.id)"
+        @mousedown="$emit('nowCoordinates', comment.id)"
+      >
         <Box
           class="content-box"
-        >{{commentI.User.username}} : {{commentI.content}} 날짜 : {{$moment(commentI.createdAt).format('YYYY.MM.DD')}}</Box>
+          :class="{right:comment.swipe}"
+        >{{comment.User.username}} : {{comment.content}} 날짜 : {{$moment(comment.createdAt).format('YYYY.MM.DD')}}</Box>
       </div>
-      <Box class="closeBox">ss</Box>
+      <Box class="closeBox" horizontal="center" vertical="center">
+        <Button>삭제</Button>
+      </Box>
     </Box>
   </Box>
 </template>
 
 <script>
 import Box from '@/components/presentational/molecules/Box'
-
+import Button from '@/components/presentational/atoms/Button'
 export default {
   components: {
-    Box
+    Box,
+    Button
   },
   props: {
-    comment: {
+    comments: {
       type: Array,
       default() {
         return []
@@ -37,7 +45,7 @@ export default {
   width: 100%;
   height: 100%;
   overflow-y: scroll;
-  .www {
+  .box-wrap {
     width: 100%;
   }
   .content-boxW {
@@ -55,13 +63,21 @@ export default {
     z-index: 999;
     transition: all 0.5s;
   }
+  .content-box.right {
+    right: 50px;
+  }
   .closeBox {
-    width: 40px;
+    width: 50px;
     height: 40px;
+    line-height: 40px;
     position: absolute;
     right: 0;
     background: red;
     top: 0;
+    button {
+      color: #fff;
+      font-size: 13px;
+    }
   }
   .input-box {
     width: 100%;
