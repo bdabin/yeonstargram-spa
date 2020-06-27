@@ -16,7 +16,7 @@
       @followinglist="followinglist"
       @profile-edit="profileEdit"
     ></mypage>
-    <mypageboardlist :mypageInfo="mypageInfo" />
+    <mypageboardlist :boards="boards" @detail="detail" />
     <TabBar />
   </div>
 </template>
@@ -47,7 +47,9 @@ export default {
 
       mypageInfo: {},
       isFollowing: false,
-      loading: false
+      profileImg: '',
+      loading: false,
+      boards: []
     }
   },
   created() {
@@ -68,19 +70,24 @@ export default {
         if (result == 1) {
           this.isFollowing = true
         }
-      }
-      //
-      this.mypageInfo.BoardList = await this.mypageInfo.BoardList.map(board => {
-        if (board.Photo) {
-          const url = board.Photo.url.split('/')
-          board.image = `/api/image/${url[url.length - 1]}`
-        }
-        return board
-      })
 
-      //프로필 이미지
-      const url = this.mypageInfo.Profile.url.split('/')
-      this.mypageInfo.Profile.url = `/api/image/${url[url.length - 1]}`
+        this.boards = response.data.BoardList.sort((a, b) => {
+          if (a.id > b.id) {
+            return -1
+          } else if (a.id < b.id) {
+            return 1
+          } else {
+            return 0
+          }
+        }).map(board => {
+          if (board.Photo) {
+            const url = board.Photo.url.split('/')
+            board.image = `/api/image/${url[url.length - 1]}`
+            board.filter = board.Photo.filter
+          }
+          return board
+        })
+      }
 
       this.loading = false
     },
@@ -118,6 +125,9 @@ export default {
     },
     profileEdit() {
       this.$router.push(`/mypage/${this.userId}/profile`)
+    },
+    detail(id) {
+      this.$router.push(`/detail?user=${this.userId}&id=${id}`)
     }
   }
 }

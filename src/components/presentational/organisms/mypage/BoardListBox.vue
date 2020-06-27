@@ -1,7 +1,12 @@
 <template>
-  <Box class="mypage-board-list" padding="0 0 40px">
-    <Box v-for="(board,index) in mypageInfo.BoardList" :key="index" class="board-box">
-      <Box class="content" :style="`background-image:url(${board.image})`"></Box>
+  <Box class="mypage-board-list" wrap padding="0 0 40px">
+    <Box
+      v-for="board in boards"
+      :key="board.id"
+      class="board-box"
+      @click.native="$emit('detail',board.id)"
+    >
+      <Box :class="`${board.filter} content`" :style="`background-image:url(${board.image})`"></Box>
     </Box>
   </Box>
 </template>
@@ -13,30 +18,11 @@ export default {
     Box
   },
   props: {
-    mypageInfo: {
-      type: Object,
+    boards: {
+      type: Array,
       default() {
-        return {}
+        return []
       }
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    }
-  },
-  computed: {
-    filter() {
-      if (this.loading) {
-        return ''
-      }
-      return this.board.Photo ? this.board.filter : ''
-    },
-    img() {
-      if (this.loading) {
-        return ''
-      }
-
-      return this.board.image ? this.board.image : ''
     }
   }
 }
@@ -46,15 +32,15 @@ export default {
 .mypage-board-list {
   width: 100%;
   position: relative;
-  display: block;
   .board-box {
-    float: left;
+    display: flex;
     position: relative;
-    width: 33.33%;
-    border: 0.5px solid #fff;
-    height: 100%;
-    padding-bottom: 33.33% !important;
+    flex-direction: column;
+    width: calc((100vw) / 3);
+    height: calc((100vw) / 3);
     background: #000;
+    box-sizing: border-box;
+    border: 0.5px solid #fff;
     .content {
       position: absolute;
       width: 100%;

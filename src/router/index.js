@@ -52,6 +52,19 @@ const routes = [
     }
   },
   {
+    path: '/detail',
+    name: '게시물 상세',
+    component: () => import('../views/board/detail'),
+    async beforeEnter(to, from, next) {
+      await store.dispatch('isLogin')
+      if (!store.state.isLogin) {
+        router.push('/account/login')
+        return
+      }
+      next()
+    }
+  },
+  {
     path: '/mypage/:id',
     name: '마이페이지',
     component: () => import('../views/mypage'),
