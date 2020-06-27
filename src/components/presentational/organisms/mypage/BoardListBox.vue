@@ -1,7 +1,7 @@
 <template>
   <Box class="mypage-board-list" padding="0 0 40px">
     <Box v-for="(board,index) in mypageInfo.BoardList" :key="index" class="board-box">
-      <Box class="content">sdsds</Box>
+      <Box class="content" :style="`background-image:url(${board.image})`"></Box>
     </Box>
   </Box>
 </template>
@@ -18,6 +18,25 @@ export default {
       default() {
         return {}
       }
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    filter() {
+      if (this.loading) {
+        return ''
+      }
+      return this.board.Photo ? this.board.filter : ''
+    },
+    img() {
+      if (this.loading) {
+        return ''
+      }
+
+      return this.board.image ? this.board.image : ''
     }
   }
 }
@@ -40,6 +59,9 @@ export default {
       position: absolute;
       width: 100%;
       height: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
     }
   }
 }

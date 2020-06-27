@@ -42,8 +42,8 @@ export default {
   },
   data() {
     return {
-        loading: false,
-       posts: [{}],
+      loading: false,
+      posts: [{}],
       // #TODO : isList 이름 바꾸기 -> isMoreBtn으로 변경
       isMoreBtn: false,
       id: NaN

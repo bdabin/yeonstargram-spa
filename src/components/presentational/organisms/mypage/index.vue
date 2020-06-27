@@ -2,7 +2,18 @@
   <Box direction="column" padding="30px 0" class="profile-box">
     <Box direction="row" class="profile-info" padding="0 20px">
       <Box direction="column" class="conBox" horizontal="center">
-        <RoundBox radius="50px" direction="row" class="profile-img"></RoundBox>
+        <label>
+          <RoundBox radius="50px" direction="row" class="profile-img">
+            <input
+              type="file"
+              name="url"
+              ref="uploader"
+              class="inputfile"
+              id="file"
+              @change="fileUpload"
+            />
+          </RoundBox>
+        </label>
       </Box>
       <Box direction="column" class="conBox">
         <P>{{boardList}}</P>
@@ -79,6 +90,11 @@ export default {
       }
       return 0
     }
+  },
+  methods: {
+    fileUpload(e) {
+      this.$store.dispatch('imageUpload', e.target)
+    }
   }
 }
 </script>
@@ -99,6 +115,9 @@ export default {
         height: 50px;
         border: 2px solid #dedede;
         margin: 0 auto;
+        input {
+          display: none;
+        }
       }
       p,
       button {

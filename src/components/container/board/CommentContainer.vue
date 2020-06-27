@@ -5,7 +5,12 @@
         <Icon name="logo" />
       </template>
     </NavigationBar>
-    <CommentBoxList :comment="comment" @addcount="addcount" @nows="nows" :right="right" />
+    <CommentBoxList
+      :comment="comment"
+      :positionRight="positionRight"
+      @nowCoordinates="nowCoordinates"
+      @moveCoordinates="moveCoordinates"
+    />
     <CommentBoxInput v-model="description" @commentwrite="commentwrite" />
     <!-- #TODO : 댓글 입력박스, 출력박스 구분, 삭제기능 추가 -->
   </div>
@@ -30,7 +35,10 @@ export default {
       // #TODO : 입력 data, 출력 data 구분
       description: '',
       comment: [],
-      id: this.$route.params.id || null
+      id: this.$route.params.id || null,
+      nowX: '',
+      leftX: '',
+      positionRight: false
     }
   },
   created() {
@@ -49,6 +57,17 @@ export default {
       const response = await axios.get(`/api/board/${this.id}/comment`)
       if (response.status === 200) {
         this.comment = response.data.filter(comment => comment.writer)
+      }
+    },
+    nowCoordinates() {
+      this.nowX = event.pageX
+    },
+    moveCoordinates() {
+      this.leftX = event.pageX
+      if (this.leftX < this.nowX) {
+        this.positionRight = true
+      } else {
+        this.positionRight = false
       }
     }
   }

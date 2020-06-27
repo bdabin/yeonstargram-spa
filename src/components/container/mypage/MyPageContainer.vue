@@ -7,6 +7,7 @@
     </NavigationBar>
     <mypage
       :mypageInfo="mypageInfo"
+      :loading="loading"
       :pageCheck="pageCheck"
       @follow="follow"
       @unfollow="unfollow"
@@ -45,7 +46,8 @@ export default {
 
       mypageInfo: {},
       isFollowing: false,
-      profileImg: ''
+      profileImg: '',
+      loading: false
     }
   },
   created() {
@@ -58,7 +60,7 @@ export default {
       } else {
         this.pageCheck = true
       }
-
+      this.loading = true
       const response = await axios.get(`/api/account/mypage/${this.userId}`)
       if (response.status === 200) {
         this.mypageInfo = response.data
@@ -67,6 +69,15 @@ export default {
           this.isFollowing = true
         }
       }
+      //
+      this.mypageInfo.BoardList = await this.mypageInfo.BoardList.map(board => {
+        if (board.Photo) {
+          const url = board.Photo.url.split('/')
+          board.image = `/api/image/${url[url.length - 1]}`
+        }
+        return board
+      })
+      this.loading = false
     },
 
     // #TODO : followOn,unfollowOn name 변경
