@@ -1,11 +1,15 @@
 <template>
   <Box class="comment-page" direction="column" padding="50px 0 40px">
-    <Box class="content-boxW" direction="column" v-for="(commentI,index) in comment" :key="index">
-      <div class="box-wrap" @click="$emit('moveCoordinates')" @mousedown="$emit('nowCoordinates')">
+    <Box class="content-boxW" direction="column" v-for="(comment,index) in comments" :key="index">
+      <div
+        class="box-wrap"
+        @click="$emit('moveCoordinates', comment.id)"
+        @mousedown="$emit('nowCoordinates', comment.id)"
+      >
         <Box
           class="content-box"
-          :class="{right:positionRight}"
-        >{{commentI.User.username}} : {{commentI.content}} 날짜 : {{$moment(commentI.createdAt).format('YYYY.MM.DD')}}</Box>
+          :class="{right:comment.swipe}"
+        >{{comment.User.username}} : {{comment.content}} 날짜 : {{$moment(comment.createdAt).format('YYYY.MM.DD')}}</Box>
       </div>
       <Box class="closeBox" horizontal="center" vertical="center">
         <Button>삭제</Button>
@@ -23,16 +27,10 @@ export default {
     Button
   },
   props: {
-    comment: {
+    comments: {
       type: Array,
       default() {
         return []
-      }
-    },
-    positionRight: {
-      type: Boolean,
-      default() {
-        return false
       }
     }
   }

@@ -6,8 +6,7 @@
       </template>
     </NavigationBar>
     <CommentBoxList
-      :comment="comment"
-      :positionRight="positionRight"
+      :comments="comments"
       @nowCoordinates="nowCoordinates"
       @moveCoordinates="moveCoordinates"
     />
@@ -34,11 +33,10 @@ export default {
     return {
       // #TODO : 입력 data, 출력 data 구분
       description: '',
-      comment: [],
+      comments: [],
       id: this.$route.params.id || null,
       nowX: '',
-      leftX: '',
-      positionRight: false
+      leftX: ''
     }
   },
   created() {
@@ -56,18 +54,31 @@ export default {
     async loadData() {
       const response = await axios.get(`/api/board/${this.id}/comment`)
       if (response.status === 200) {
-        this.comment = response.data.filter(comment => comment.writer)
+        this.comments = response.data
+          .filter(comment => comment.writer)
+          .map(data => {
+            data.swipe = false
+            return data
+          })
       }
     },
     nowCoordinates() {
       this.nowX = event.pageX
     },
-    moveCoordinates() {
+    moveCoordinates(id) {
+      const activeIndex = this.comments.findIndex(data => data.id === id)
       this.leftX = event.pageX
       if (this.leftX < this.nowX) {
-        this.positionRight = true
+        this.comments.map((data, index) => {
+          if (index === activeIndex) {
+            data.swipe = true
+          } else {
+            data.swipe = false
+          }
+          return data
+        })
       } else {
-        this.positionRight = false
+        this.comments[activeIndex].swipe = false
       }
     }
   }

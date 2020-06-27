@@ -14,6 +14,7 @@
       :isFollowing="isFollowing"
       @followerlist="followerlist"
       @followinglist="followinglist"
+      @profile-edit="profileEdit"
     ></mypage>
     <mypageboardlist :mypageInfo="mypageInfo" />
     <TabBar />
@@ -46,7 +47,6 @@ export default {
 
       mypageInfo: {},
       isFollowing: false,
-      profileImg: '',
       loading: false
     }
   },
@@ -77,6 +77,11 @@ export default {
         }
         return board
       })
+
+      //프로필 이미지
+      const url = this.mypageInfo.Profile.url.split('/')
+      this.mypageInfo.Profile.url = `/api/image/${url[url.length - 1]}`
+
       this.loading = false
     },
 
@@ -110,6 +115,9 @@ export default {
     },
     followinglist() {
       this.$router.push(`/mypage/follow/${this.userId}?type=following`)
+    },
+    profileEdit() {
+      this.$router.push(`/mypage/${this.userId}/profile`)
     }
   }
 }

@@ -37,9 +37,7 @@ export default {
       }
     }
   },
-  created() {
-    console.log(this.$route.query.type)
-  }
+  created() {}
 }
 </script>
 
