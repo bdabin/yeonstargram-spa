@@ -31,6 +31,15 @@ export default {
             }
           },
           {
+            icon: this.$route.path === '/explore' ? 'search2' : 'search',
+            action: () => {
+              if (this.$store.state.upload.image) {
+                this.$store.dispatch('imageReset')
+              }
+              if (this.$route.path !== '/explore') this.$router.push('/explore')
+            }
+          },
+          {
             icon: this.$route.path === '/board/write' ? 'plus2' : 'plus',
             action: () => {
               this.$refs.uploader.click()

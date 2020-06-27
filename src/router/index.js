@@ -120,7 +120,20 @@ const routes = [
     path: '/board/:id/comment',
     name: '수정',
     component: () => import('../views/board/comment')
-  }
+  },
+  {
+    path: '/explore',
+    name: '검색',
+    component: () => import('../views/explore'),
+    async beforeEnter(to, from, next) {
+      await store.dispatch('isLogin')
+      if (!store.state.isLogin) {
+        router.push('/account/login')
+        return
+      }
+      next()
+    }
+  },
 
 
 ]
