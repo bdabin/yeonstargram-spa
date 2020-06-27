@@ -1,5 +1,5 @@
 <template>
-  <Box direction="column">
+  <Box direction="column" padding="0 0 50px">
     <template v-for="post in posts">
       <Cell
         :loading="loading"
