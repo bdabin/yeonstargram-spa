@@ -94,7 +94,7 @@ export default {
         return ''
       }
 
-      return this.mypageInfo.Profile.url ? this.mypageInfo.Profile.url : ''
+      return this.mypageInfo.Profile ? this.mypageInfo.Profile.url : ''
     },
     follower() {
       if (this.mypageInfo.follower) {

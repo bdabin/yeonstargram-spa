@@ -89,8 +89,10 @@ export default {
         })
       }
       //프로필 이미지
-      const url = this.mypageInfo.Profile.url.split('/')
-      this.mypageInfo.Profile.url = `/api/image/${url[url.length - 1]}`
+      if (this.mypageInfo.Profile) {
+        const url = this.mypageInfo.Profile.url.split('/')
+        this.mypageInfo.Profile.url = `/api/image/${url[url.length - 1]}`
+      }
 
       this.loading = false
     },
